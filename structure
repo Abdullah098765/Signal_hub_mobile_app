@@ -1,0 +1,54 @@
+SignalHubMobileApp/
+│
+├── assets/                   # Static assets such as images, fonts, etc.
+│   ├── images/
+│   └── fonts/
+│
+├── components/               # Reusable components across the app
+│   ├── Button/
+│   ├── Card/
+│   ├── Input/
+│   └── ...
+│
+├── screens/                  # Screen components representing different views/pages
+│   ├── HomeScreen/
+│   ├── LoginScreen/
+│   ├── SignUpScreen/
+│   ├── ProfileScreen/
+│   ├── SignalListingScreen/
+│   └── ...
+│
+├── navigation/               # Navigation configurations and components
+│   ├── AppNavigator.tsx      # Main navigator for the app
+│   ├── AuthNavigator.tsx     # Navigator for authentication flows
+│   └── ...
+│
+├── api/                      # API utility functions for backend interactions
+│   ├── authService.ts        # Functions related to authentication
+│   ├── signalService.ts      # Functions related to signals (buy, sell, review, etc.)
+│   └── ...
+│
+├── store/                    # State management setup (e.g., Redux)
+│   ├── actions/
+│   ├── reducers/
+│   └── store.ts
+│
+├── utils/                    # Utility functions and helpers
+│   ├── validation.ts
+│   ├── formatting.ts
+│   └── ...
+│
+├── hooks/                    # Custom React hooks
+│   ├── useAuth.ts
+│   ├── useSignals.ts
+│   └── ...
+│
+├── constants/                # Constant values (API endpoints, themes, etc.)
+│   ├── api.ts
+│   ├── themes.ts
+│   └── ...
+│
+├── App.tsx                   # Main entry point for the React Native application
+├── index.tsx                 # Root file to register the app
+├── package.json              # Project dependencies and scripts
+└── ...

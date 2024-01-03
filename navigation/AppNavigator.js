@@ -9,7 +9,7 @@ function AppNavigator() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
+      <Stack.Screen options={{ headerShown: false, }} name="Home" component={HomeScreen}></Stack.Screen>
       <Stack.Screen name="LogIn" component={LoginScreen}></Stack.Screen>
       <Stack.Screen options={{ headerShown: false, }} name="splash" component={SplashScreen}></Stack.Screen>
 

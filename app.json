@@ -1,4 +1,13 @@
 {
   "name": "Signal_hub_mobile_app",
-  "displayName": "Signal_hub_mobile_app"
+  "displayName": "Signal_hub_mobile_app",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "054828e9-44e6-4f12-ab84-00fd88a1c778"
+      }
+    },
+    "owner": "abdullahsabir2020",
+    "slug": "signal-hub"
+  }
 }

@@ -13,6 +13,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import AppNavigator from './navigation/AppNavigator';
+import { AppProvider } from './context/AppContext';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,9 +22,11 @@ function App() {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </AppProvider>
   );
 }
 

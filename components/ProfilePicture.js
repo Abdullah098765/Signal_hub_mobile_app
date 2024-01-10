@@ -18,10 +18,10 @@ const ProfilePicture = ({ source, size }) => {
 
       return (
             <View style={styles.container}>
-                  <Image
+                {source &&  <Image
                         source={{ uri: source }} // Assuming the source will be a URL; you can adjust this as needed
                         style={styles.image}
-                  />
+                  />}
             </View>
       );
 };

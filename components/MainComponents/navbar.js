@@ -1,14 +1,17 @@
 // Navbar.js
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importing Icon from FontAwesome
 import ProfilePicture from '../ProfilePicture'; // Assuming you have a ProfilePicture component
 import { useNavigation } from '@react-navigation/native';
+import { AppContext } from '../../context/AppContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const Navbar = ({ title }) => {
       const navigation = useNavigation();
-
+      const { isLoggedIn, user, setUser, removeUidFromStorage, saveUidToStorage } = useContext(AppContext);
+      const { logout } = useAuth()
       return (
             <View style={styles.navbar}>
                   {/* Logo Section */}
@@ -35,13 +38,20 @@ const Navbar = ({ title }) => {
                         {/* Profile Picture */}
 
                   </View>
-                  {/* <ProfilePicture
-                              size={36} // Adjust the size as per your requirement
-                              source="https://signal-hub.vercel.app/_next/image?url=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsignal-hub-eb98f.appspot.com%2Fo%2Fprofile-pictures%252F658aa18418e027cedd91178b%252FsignalhubIcon.jpg%3Falt%3Dmedia%26token%3Dded1d485-710e-4673-8a51-9da053f64da9&w=128&q=75"
-                        /> */}
-                  <Text onPress={() => navigation.navigate('Login')
-                  }>Login</Text>
 
+                  {!isLoggedIn ?
+                        <Text onPress={() => navigation.navigate('Login')
+                        }>Login</Text>
+                        :
+                        <TouchableOpacity
+                              onPress={() => logout()}>
+                              <ProfilePicture
+                                    size={36} // Adjust the size as per your requirement
+                                    source={user?.profilePicture}
+                              />
+                        </TouchableOpacity>
+
+                  }
             </View>
       );
 };

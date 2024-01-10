@@ -17,16 +17,16 @@ const LoginScreen = () => {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => { },
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
+        { text: 'OK', onPress: () => { } },
       ],
       { cancelable: false }
     );
   };
 
-  const { login, user } = useAuth()
+  const { login, user, } = useAuth()
 
   if (user) return
 

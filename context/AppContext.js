@@ -12,7 +12,40 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const saveUidToStorage = async (uid) => {
+    try {
+      await AsyncStorage.setItem('uid', uid);
+    } catch (error) {
+      console.error('Error saving UID to AsyncStorage:', error);
+    }
+  };
 
+  const removeUidFromStorage = async () => {
+    try {
+      await AsyncStorage.removeItem('uid');
+    } catch (error) {
+      console.error('Error removing UID from AsyncStorage:', error);
+    }
+  };
+  const getUser = async () => {
+    var raw = JSON.stringify({
+      uid: await AsyncStorage.getItem('uid')
+    });
+
+    var requestOptions = {
+      method: "POST",
+      // headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("https://signal-hub.vercel.app/api/get-user", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        setUser(JSON.parse(result))
+      })
+      .catch(error => console.log("error", error));
+  };
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -22,6 +55,7 @@ export const AppProvider = ({ children }) => {
         // If 'uid' exists, set isLoggedIn to true
         if (uid) {
           setIsLoggedIn(true);
+          getUser()
         }
 
       } catch (error) {
@@ -32,13 +66,10 @@ export const AppProvider = ({ children }) => {
 
     // Call the function to check login status when the component mounts
     checkLoginStatus();
-  }, []); // Empty dependency array ensures this useEffect runs once when the component mounts
-
-
-
+  }, []);
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, user, setUser }}>
+    <AppContext.Provider value={{ isLoggedIn, getUser, setIsLoggedIn, user, setUser, saveUidToStorage, removeUidFromStorage }}>
       {children}
     </AppContext.Provider>
   );

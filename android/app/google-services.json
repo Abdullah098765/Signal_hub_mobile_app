@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:158518644966:android:bf4f8d6be33daeb1e6ab27",
+        "mobilesdk_app_id": "1:158518644966:android:994fb4b64bbfa038e6ab27",
         "android_client_info": {
-          "package_name": "com.signalhub.android"
+          "package_name": "com.signal_hub_mobile_app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "158518644966-3krki95q2belc4nvri3rh8ur01omqo00.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.signal_hub_mobile_app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
         {
           "client_id": "158518644966-ai4msfcusip2oqa6l1gndnoe4e8mr5o0.apps.googleusercontent.com",
           "client_type": 3

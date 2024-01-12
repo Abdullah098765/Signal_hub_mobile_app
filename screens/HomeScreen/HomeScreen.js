@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import SignalCard from '../../components/MainComponents/card';
+import { AppContext } from '../../context/AppContext';
 
 const HomeScreen = () => {
   const [signals, setSignals] = useState([]);
   const [isSignalsLoading, setIsSignalsLoading] = useState(false);
-
+  const { isLoggedIn, user, setUser, removeUidFromStorage, saveUidToStorage,
+    scrollY,isTabBarVisible, setTabBarVisible,
+    setScrollY,
+    handleScroll,
+    navbarTranslateY } = useContext(AppContext);
   const getSignals = () => {
     setIsSignalsLoading(true);
 
@@ -31,11 +36,13 @@ const HomeScreen = () => {
       });
   };
 
-  const handleScroll = (event) => {
+  const handleScrollForSignals = (event) => {
+    handleScroll(event)
+
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
 
     const isCloseToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
-    
+
     if (isCloseToBottom && !isSignalsLoading) {
       getSignals();
     }
@@ -46,18 +53,25 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <ScrollView 
-      style={{ padding: 0 }}
+    <ScrollView
+
+      style={{ padding: 0, }}
       onScroll={({ nativeEvent }) => {
-        handleScroll({ nativeEvent });
+        handleScrollForSignals({ nativeEvent });
       }}
-      scrollEventThrottle={400} // Adjust this value based on your preference
+      // scrollEventThrottle={400}
+      scrollEventThrottle={16}
     >
-      {signals.map((signal) => (
-        <SignalCard signal={signal} key={signal._id} />
-      ))}
-      
-      {isSignalsLoading && <ActivityIndicator size="large" color="#0000ff" />}
+      <View style={{ marginTop: 30 }}>
+        {signals.map((signal) => (
+          <SignalCard signal={signal} key={signal._id} />
+        ))}
+        {signals.map((signal) => (
+          <SignalCard signal={signal} key={signal._id} />
+        ))}
+
+        {isSignalsLoading && <ActivityIndicator size="large" color="#0000ff" />}
+      </View>
     </ScrollView>
   );
 };

@@ -1,4 +1,4 @@
-// Navbar.js
+// BottomBar.js
 
 import React, { useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, Button, Animated } from 'react-native';
@@ -9,21 +9,26 @@ import { AppContext } from '../../context/AppContext';
 import { useAuth } from '../../hooks/useAuth';
 
 
-const Navbar = ({ title }) => {
+const BottomBar = ({ title }) => {
       const navigation = useNavigation();
-      const { isLoggedIn, user, navbarTranslateY } = useContext(AppContext);
+      const { isLoggedIn, user, setUser, removeUidFromStorage, saveUidToStorage,
+            scrollY,
+            setScrollY,
+            handleScroll,
+            navbarTranslateY } = useContext(AppContext);
       const { logout } = useAuth()
+
       return (
 
-            <Animated.View style={[styles.navbar, {
+            <Animated.View style={[styles.bottomBar, {
                   transform: [{
                         translateY: navbarTranslateY,
 
                   }],
                   elevation: 4,
-                  zIndex: 1000,
+                  // zIndex: 100,
             }]}>
-                  {/* Your Navbar content */}
+                  {/* Your BottomBar content */}
 
                   {/* Logo Section */}
                   <View style={styles.logoContainer}>
@@ -69,10 +74,10 @@ const Navbar = ({ title }) => {
 };
 
 const styles = StyleSheet.create({
-      navbar: {
+      bottomBar: {
 
             position: "absolute",
-            top: 0, right: 0, left: 0,
+            bottom: 0, right: 0, left: 0,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -101,4 +106,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default Navbar;
+export default BottomBar;

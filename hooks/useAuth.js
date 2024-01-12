@@ -10,6 +10,47 @@ export const useAuth = () => {
   const { isLoggedIn, user, setUser, getUser, removeUidFromStorage, saveUidToStorage, setIsLoggedIn } = useContext(AppContext);
   const navigation = useNavigation();
 
+  async function saveUser(userData) {
+    try {
+      // Send userData to your server to register the user
+      const response = await fetch('https://signal-hub.vercel.app/api/signUp', {
+        method: 'POST',
+        body: JSON.stringify(
+          userData
+        ),
+
+      });
+
+      if (response.ok) {
+        // User registration on the server was successful
+        console.log('User registered on the server.');
+        await saveUidToStorage(userData.fireBaseUid);
+        setIsLoggedIn(true)
+        getUser()
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
+        });
+
+      } else {
+        // Handle server registration error
+        console.log('User exists in the database.');
+        await saveUidToStorage(userData.fireBaseUid);
+        setIsLoggedIn(true)
+        getUser()
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
+        });
+        // Navigate to the desired screen using React Navigation
+        // Replace 'navigation' with your navigation object if using React Navigation
+        navigation.navigate('Home');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error registering user on the server:', error);
+    }
+  }
 
   const signInWithGoogle = async () => {
 
@@ -57,45 +98,7 @@ export const useAuth = () => {
           country: "No Info"
         }
       }
-      try {
-        // Send userData to your server to register the user
-        const response = await fetch('https://signal-hub.vercel.app/api/signUp', {
-          method: 'POST',
-          body: JSON.stringify(
-            userData
-          ),
-
-        });
-
-        if (response.ok) {
-          // User registration on the server was successful
-          console.log('User registered on the server.');
-          await saveUidToStorage(user.uid);
-          setIsLoggedIn(true)
-          getUser()
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
-          });
-
-        } else {
-          // Handle server registration error
-          console.log('User exists in the database.');
-          await saveUidToStorage(user.uid);
-          setIsLoggedIn(true)
-          getUser()
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
-          });
-          // Navigate to the desired screen using React Navigation
-          // Replace 'navigation' with your navigation object if using React Navigation
-          navigation.navigate('Home');
-        }
-      } catch (error) {
-        // Handle network or other errors
-        console.error('Error registering user on the server:', error);
-      }
+      saveUser(userData)
 
 
     } catch (error) {

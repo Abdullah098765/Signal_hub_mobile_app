@@ -10,9 +10,11 @@ function AppNavigator() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen options={{
-        header: () => <Navbar title="Home" />, // Use CustomHeader component
-      }} name="Home" component={HomeScreen}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name="Home" component={HomeScreen}></Stack.Screen>
       <Stack.Screen options={{ title: "Log in", headerStyle: { backgroundColor: "#111827" }, headerTintColor: '#fff' }} name="Login" component={LoginScreen}></Stack.Screen>
       <Stack.Screen options={{ headerShown: false, }} name="splash" component={SplashScreen}></Stack.Screen>
 
@@ -20,4 +22,4 @@ function AppNavigator() {
   );
 }
 
-export default AppNavigator;
+// export default AppNavigator;

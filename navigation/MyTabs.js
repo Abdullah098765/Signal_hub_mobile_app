@@ -7,6 +7,7 @@ import ProfilePicture from "../components/ProfilePicture";
 import { AppContext } from "../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { Animated } from "react-native";
+import CreateSignal from "../screens/CreateSignalScreen/CreateSignal";
 
 
 const Tab = createBottomTabNavigator();
@@ -35,24 +36,35 @@ export const BottomTabNavigator = () => {
                         tabBarVisible: false, // Add tabBarVisible option
                   })}
             >
-
+                  <Tab.Screen
+                        name="Create"
+                        component={CreateSignal}
+                        options={{
+                              tabBarIcon: ({ color, size }) => (
+                                    <Ionicons name="add" color={color} size={size} />
+                              ),
+                        }}
+                  />
                   <Tab.Screen
                         name="Home"
-                        component={HomeScreen}
+                        component={AppNavigator}
                         options={{
                               tabBarIcon: ({ color, size }) => (
                                     <Ionicons name="home" color={color} size={size} />
                               ),
                         }}
                   />
-                  <Tab.Screen
+
+
+
+                  {/* <Tab.Screen
                         name="Login"
                         component={LoginScreen}
                         options={{
                               tabBarIcon: ({ color, size }) => (
                                     <Ionicons name="search" color={color} size={size} />),
                         }}
-                  />
+                  /> */}
             </Tab.Navigator>
       );
 };

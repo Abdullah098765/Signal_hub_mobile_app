@@ -13,6 +13,7 @@ const Navbar = ({ title }) => {
       const navigation = useNavigation();
       const { isLoggedIn, user, navbarTranslateY } = useContext(AppContext);
       const { logout } = useAuth()
+
       return (
 
             <Animated.View style={[styles.navbar, {
@@ -55,8 +56,9 @@ const Navbar = ({ title }) => {
                         }>Login</Text>
                         :
                         <TouchableOpacity
-                              onPress={() => logout()}>
+                              onPress={() => navigation.navigate('UserProfile')}>
                               <ProfilePicture
+
                                     size={30} // Adjust the size as per your requirement
                                     source={user?.profilePicture}
                               />

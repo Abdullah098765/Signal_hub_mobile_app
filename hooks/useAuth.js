@@ -29,7 +29,7 @@ export const useAuth = () => {
         getUser()
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
+          routes: [{ name: 'AppHome' }], // Replace 'Home' with your initial screen name
         });
 
       } else {
@@ -40,11 +40,11 @@ export const useAuth = () => {
         getUser()
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Home' }], // Replace 'Home' with your initial screen name
+          routes: [{ name: 'AppHome' }], // Replace 'Home' with your initial screen name
         });
         // Navigate to the desired screen using React Navigation
         // Replace 'navigation' with your navigation object if using React Navigation
-        navigation.navigate('Home');
+        navigation.navigate('AppHome');
       }
     } catch (error) {
       // Handle network or other errors

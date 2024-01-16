@@ -6,7 +6,7 @@ const ProfilePicture = ({ source, size }) => {
             container: {
                   width: size, // Adjust the size as needed
                   height: size,
-                  borderRadius: 20, // To make it a circular image
+                  borderRadius: 1000, // To make it a circular image
                   overflow: 'hidden', // To ensure the image stays within the border radius
             },
             image: {

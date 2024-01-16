@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isOptionBarsVisible, setOptionBarsVisible] = useState(true);
+  const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
 
   const saveUidToStorage = async (uid) => {
     try {
@@ -106,9 +107,10 @@ export const AppProvider = ({ children }) => {
       scrollY,
       setScrollY,
       handleScroll,
-      navbarTranslateY
+      navbarTranslateY,
+      currentProfileRoute, setCurrentProfileRoute
     }}>
-      { children }
+      {children}
     </AppContext.Provider >
   );
 };

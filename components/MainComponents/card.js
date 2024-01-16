@@ -57,7 +57,7 @@ const SignalCard = ({ signal}) => {
 };
 const styles = StyleSheet.create({
       card: {
-            marginVertical: 5,
+            marginBottom: 10,
             shadowColor: 'black',
             shadowOffset: { width: 0, height: 2 },
             shadowRadius: 6,

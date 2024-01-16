@@ -62,7 +62,7 @@ const HomeScreen = () => {
       // scrollEventThrottle={400}
       scrollEventThrottle={16}
     >
-      <View style={{ marginTop: 30 }}>
+      <View style={{ marginTop: 36 }}>
         {signals.map((signal) => (
           <SignalCard signal={signal} key={signal._id} />
         ))}

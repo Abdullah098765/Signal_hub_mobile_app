@@ -60,8 +60,8 @@ const ReviewsInput = ({ user, newReview, handleSelectImage, handleReviewSubmit, 
 
 const Reviews = ({ user, newReview, handleSelectImage, handleReviewSubmit, loading, handleImageOpen }) => {
 
-      const reviews = user.reviews
-
+      const reviews = user?.reviews
+      if (!user) return <Text>No Reviews</Text>
 
       return < View style={styles.container} >
             <ScrollView style={styles.reviewsContainer}>

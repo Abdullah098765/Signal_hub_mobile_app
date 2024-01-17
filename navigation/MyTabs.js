@@ -36,6 +36,15 @@ export const BottomTabNavigator = () => {
                         tabBarVisible: false, // Add tabBarVisible option
                   })}
             >
+                       <Tab.Screen
+                        name="Home"
+                        component={AppNavigator}
+                        options={{
+                              tabBarIcon: ({ color, size }) => (
+                                    <Ionicons name="home" color={color} size={size} />
+                              ),
+                        }}
+                  />
                   <Tab.Screen
                         name="Create"
                         component={CreateSignal}
@@ -45,15 +54,7 @@ export const BottomTabNavigator = () => {
                               ),
                         }}
                   />
-                  <Tab.Screen
-                        name="Home"
-                        component={AppNavigator}
-                        options={{
-                              tabBarIcon: ({ color, size }) => (
-                                    <Ionicons name="home" color={color} size={size} />
-                              ),
-                        }}
-                  />
+             
 
 
 

@@ -5,9 +5,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import ActionButtonsForUser from './ActionButtonsForUser';
 import ActionButtonsForProvider from './ActionButtonsForProvider';
-import ShareButton from "../../../components/ShareButton.js"
+import ShareButton from "../../../components/Buttons/ShareButton.js"
 import { useAuth } from '../../../hooks/useAuth.js';
-import LogoutButton from '../../../components/LogoutButton.js';
+import LogoutButton from '../../../components/Buttons/LogoutButton.js';
 
 const ProfileHeader = ({ user }) => {
       function formatRegistrationDate(timestamp) {

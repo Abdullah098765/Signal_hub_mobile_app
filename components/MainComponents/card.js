@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { formatDistanceToNow } from 'date-fns';
 import SignalDetails from '../SignalCardDetails';
 import UserProfileLink from '../UserProfileLink';
-import SignalFollowButton from '../SignalFollowButton';
-import LikeDislikeButton from '../LikeDislikeButton';
+import SignalFollowButton from '../Buttons/SignalFollowButton';
+import LikeDislikeButton from '../Buttons/LikeDislikeButton';
 // import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 const SignalCard = ({ signal}) => {

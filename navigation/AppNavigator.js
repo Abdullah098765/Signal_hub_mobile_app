@@ -5,12 +5,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import Navbar from '../components/MainComponents/navbar';
 import UserProfileScreen from '../screens/UserProfileScreen/ProfileScreen';
+import SignalScreen from '../screens/SignalScreen/SignalScreen.js';
 
 function AppNavigator() {
   const Stack = createNativeStackNavigator();
 
   return (
     <Stack.Navigator>
+      <Stack.Screen options={{ headerShown: false, }} name="Signal" component={SignalScreen}></Stack.Screen>
       <Stack.Screen options={{ headerShown: false, }} name="UserProfile" component={UserProfileScreen}></Stack.Screen>
       <Stack.Screen options={{ headerShown: false, }} name="splash" component={SplashScreen}></Stack.Screen>
       <Stack.Screen

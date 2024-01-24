@@ -8,6 +8,8 @@ import { AppContext } from "../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { Animated } from "react-native";
 import CreateSignal from "../screens/CreateSignalScreen/CreateSignal";
+import Subscriptions from "../screens/Subscriptions/Subscriptions.js";
+import FollowingSignals from "../screens/FollowingSignals/FollowingSignals.js";
 
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +38,7 @@ export const BottomTabNavigator = () => {
                         tabBarVisible: false, // Add tabBarVisible option
                   })}
             >
-                       <Tab.Screen
+                  <Tab.Screen
                         name="Home"
                         component={AppNavigator}
                         options={{
@@ -46,6 +48,26 @@ export const BottomTabNavigator = () => {
                         }}
                   />
                   <Tab.Screen
+                        name="Following"
+                        component={FollowingSignals}
+                        options={{
+                              tabBarIcon: ({ color, size }) => (
+                                    <Ionicons name="bar-chart" color={color} size={size} />
+                              ),
+                        }}
+                  />
+                  <Tab.Screen
+                        name="Subscriptions"
+                        component={Subscriptions}
+                        options={{
+                              tabBarIcon: ({ color, size }) => (
+                                    <Ionicons name="people" color={color} size={size} />
+                              ),
+                        }}
+                  />
+
+
+                  <Tab.Screen
                         name="Create"
                         component={CreateSignal}
                         options={{
@@ -54,7 +76,7 @@ export const BottomTabNavigator = () => {
                               ),
                         }}
                   />
-             
+
 
 
 

@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../hooks/useAuth';
+import ProviderCareer from '../../components/MainComponents/ProviderCareer.js'
+import SubscribeButton from '../../components/Buttons/SubscribeButton.js';
 
 const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading }) => {
+  const [IsThisSignalProvidedByMe, setIsThisSignalProvidedByMe] = useState(false);
+  useEffect(() => {
+
+    if (signal.signalProvider._id === user._id) {
+      setIsThisSignalProvidedByMe(true)
+    }
+
+  }, [signal, user]);
 
   return (
     <View style={styles.container}>
@@ -24,28 +34,9 @@ const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading
           </View>
         </TouchableOpacity>
 
-        <View style={styles.statsContainer}>
-          <View style={styles.signalInfo}>
-            <Text style={styles.signalInfoText}>
-              {signal.signalProvider.goodSignals.length} Good Signals
-            </Text>
-          </View>
-          <View style={styles.signalInfo}>
-            <Text style={styles.signalInfoText}>
-              {signal.signalProvider.badSignals.length} Bad Signals
-            </Text>
-          </View>
-          <View style={styles.signalInfo}>
-            <Text style={styles.signalInfoText}>
-              {signal.signalProvider.Subscribers.length} Subscribers
-            </Text>
-          </View>
-          <View style={styles.signalInfo}>
-            <Text style={styles.signalInfoText}>
-              {signal.signalProvider.reviews.length} Reviews
-            </Text>
-          </View>
-        </View>
+        <ProviderCareer signalProvider={signal.signalProvider} />
+
+
 
         <View style={styles.actionsContainer}>
           {/* {signal.signalProvider._id !== user._id ? (
@@ -55,17 +46,19 @@ const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading
           )} */}
 
           <View style={{ justifyContent: "flex-end", alignItems: "flex-end", flex: 1 }}>
-            <TouchableOpacity
-              onPress={() => {
-                // setRouterLoading(true);
-                // router.push('/profile');
-              }}
-              style={styles.profileButton}
-            >
-              <Text style={styles.profileButtonText}>
-                <Ionicons name="person" /> Go To Profile
-              </Text>
-            </TouchableOpacity>
+            {!IsThisSignalProvidedByMe ? <SubscribeButton targetUser_id={signal.signalProvider._id} targetUserSubscribers={signal.signalProvider.Subscribers} />
+              : <TouchableOpacity
+                onPress={() => {
+                  // setRouterLoading(true);
+                  // router.push('/profile');
+                }}
+                style={styles.profileButton}
+              >
+
+                <Text style={styles.profileButtonText}>
+                  <Ionicons name="person" /> Go To Profile
+                </Text>
+              </TouchableOpacity>}
           </View>
         </View>
       </View>
@@ -140,7 +133,9 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 4,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    flex: 1,
+    width:"100%"
   },
   profileButtonText: {
     color: 'white',

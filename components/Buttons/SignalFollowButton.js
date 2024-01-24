@@ -7,7 +7,7 @@ const SignalFollowButton = ({ signal }) => {
       var following = null;
       const handlePress = () => {
             // Navigate to the signal details page when clicked
-            navigation.navigate('SignalDetails', { signalId: signal._id });
+            navigation.navigate('Signal', { signalId: signal._id });
       };
 
       return (

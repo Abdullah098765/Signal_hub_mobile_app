@@ -1,20 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome icon
+import useAction from '../../hooks/useAction';
+import { useAuth } from '../../hooks/useAuth';
 
-const LikeDislikeButton = ({ likeCount, dislikeCount, handleLikeClick, handleDislikeClick, setIsModalOpen }) => {
+const LikeDislikeButton = ({ signal }) => {
+      const { user } = useAuth()
+      const [liked, setLiked] = useState(false);
+      const [disliked, setDisliked] = useState(false);
+      const [likeCount, setLikeCount] = useState(signal?.likes.length);
+      const [dislikeCount, setDislikeCount] = useState(signal?.disLikesCount.length);
+
+      const { handleLikeClick, handleDislikeClick } = useAction()
+      useEffect(() => {
+
+            if (signal.likes.indexOf(user?._id) !== -1) {
+                  setLiked(true)
+            }
+            if (signal.disLikesCount.indexOf(user?._id) !== -1) {
+                  setDisliked(true)
+            }
+
+
+
+      }, [user]);
       return (
             <View style={styles.container}>
-                  <TouchableOpacity onPress={handleLikeClick}>
-                        <Icon name="thumbs-up" size={14} color="#666" />
+                  <TouchableOpacity onPress={() => {
+                        handleLikeClick(liked, signal._id, user._id, disliked, setLiked, likeCount, setLikeCount, setDisliked, dislikeCount, setDislikeCount)
+                  }}>
+                        <Icon name="thumbs-up" size={18} color={liked ? "green" : "#666"} />
                   </TouchableOpacity>
-                  <Text style={styles.countText}>{"3.2k"}</Text>
+                  <Text style={styles.countText}>{likeCount}</Text>
 
                   <View style={styles.separator} />
 
-                  <Text style={styles.countText}>{"1k"}</Text>
-                  <TouchableOpacity onPress={handleDislikeClick}>
-                        <Icon name="thumbs-down" size={14} color="#666" />
+                  <Text style={styles.countText}>{dislikeCount}</Text>
+                  <TouchableOpacity onPress={() =>
+                        handleDislikeClick(liked, signal._id, user._id, disliked, setLiked, likeCount, setLikeCount, setDisliked, dislikeCount, setDislikeCount)}>
+                        <Icon name="thumbs-down" size={18} color={disliked ? "red" : "#666"} />
                   </TouchableOpacity>
             </View>
       );
@@ -22,7 +46,7 @@ const LikeDislikeButton = ({ likeCount, dislikeCount, handleLikeClick, handleDis
 
 const styles = StyleSheet.create({
       container: {
-            backgroundColor: '#fff', // Similar to bg-gray-700
+            backgroundColor: '#fff',
             flexDirection: 'row',
             alignItems: 'center',
             paddingVertical: 8,

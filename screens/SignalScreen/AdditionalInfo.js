@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import ActionButtons from './ActionButtons';
 
 const AdditionalInfo = ({ signal }) => {
 
@@ -194,7 +195,10 @@ const AdditionalInfo = ({ signal }) => {
                               {/* Add the remaining grid items here */}
 
                         </View>
+                        <ActionButtons signal={signal} />
+
                   </View>
+
             </View>
       );
 };

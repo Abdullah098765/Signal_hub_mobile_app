@@ -8,7 +8,7 @@ import SignalFollowButton from '../Buttons/SignalFollowButton';
 import LikeDislikeButton from '../Buttons/LikeDislikeButton';
 // import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
-const SignalCard = ({ signal}) => {
+const SignalCard = ({ signal }) => {
 
 
       return (
@@ -47,7 +47,7 @@ const SignalCard = ({ signal}) => {
                   </View>
 
                   <View style={styles.cardButtonsContainer}>
-                        <LikeDislikeButton />
+                        <LikeDislikeButton signal={signal} />
                         <View style={{ width: 4 }}></View>
                         <SignalFollowButton signal={signal} />
                   </View>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
             elevation: 8,
             backgroundColor: 'white',
             padding: 10,
-            borderRadius:0
+            borderRadius: 0
 
             // borderRadius: 10
       },

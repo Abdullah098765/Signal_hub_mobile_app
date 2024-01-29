@@ -2,15 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import SignalCard from '../../components/MainComponents/card';
 import { AppContext } from '../../context/AppContext';
+import { useRoute } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const [signals, setSignals] = useState([]);
   const [isSignalsLoading, setIsSignalsLoading] = useState(false);
   const { isLoggedIn, user, setUser, removeUidFromStorage, saveUidToStorage,
-    scrollY,isTabBarVisible, setTabBarVisible,
+    scrollY, isTabBarVisible, setTabBarVisible,
     setScrollY,
     handleScroll,
     navbarTranslateY } = useContext(AppContext);
+  const route = useRoute()
+
   const getSignals = () => {
     setIsSignalsLoading(true);
 
@@ -49,8 +52,9 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
+    console.log(route);
     getSignals();
-  }, []);
+  }, [route.name]);
 
   return (
     <ScrollView
@@ -66,10 +70,6 @@ const HomeScreen = () => {
         {signals.map((signal) => (
           <SignalCard signal={signal} key={signal._id} />
         ))}
-        {signals.map((signal) => (
-          <SignalCard signal={signal} key={signal._id} />
-        ))}
-
         {isSignalsLoading && <ActivityIndicator size="large" color="#0000ff" />}
       </View>
     </ScrollView>

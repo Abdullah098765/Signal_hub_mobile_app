@@ -9,7 +9,7 @@ import ShareButton from "../../../components/Buttons/ShareButton.js"
 import { useAuth } from '../../../hooks/useAuth.js';
 import LogoutButton from '../../../components/Buttons/LogoutButton.js';
 
-const ProfileHeader = ({ user }) => {
+const ProfileHeader = ({ user, isMyProfile }) => {
       function formatRegistrationDate(timestamp) {
             const date = new Date(timestamp);
 
@@ -20,7 +20,7 @@ const ProfileHeader = ({ user }) => {
       return (
             <View style={styles.container}>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, position: "absolute", top: 10, left: 10 }}>
-                     <LogoutButton/>
+                        {isMyProfile && <LogoutButton />}
                   </View>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, position: "absolute", top: 10, right: 10 }}>
                         <ShareButton />
@@ -46,9 +46,7 @@ const ProfileHeader = ({ user }) => {
                               Subscribers {user.Subscribers.length}
                         </Text>
                   </View>
-
-                  {/* <ActionButtonsForUser /> */}
-                  <ActionButtonsForProvider />
+                  {!isMyProfile ? <ActionButtonsForUser targetUser={user} targetUserSubscribers={user.Subscribers} /> : <ActionButtonsForProvider />}
             </View>
       );
 }
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
             backgroundColor: 'white',
             borderRadius: 10,
             padding: 20,
-            // paddingTop:0,
             paddingVertical: 10,
             flexDirection: 'column',
             alignItems: 'center',

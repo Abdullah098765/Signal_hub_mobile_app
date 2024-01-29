@@ -43,7 +43,7 @@ const SubscribeButton = ({ targetUser_id, targetUserSubscribers }) => {
                               <View style={styles.buttonContent}>
                                     <Text style={styles.buttonText}>
                                           {isLoading ? (
-                                                        <ActivityIndicator size="small" color="#fff" />
+                                                <ActivityIndicator size="small" color="#fff" />
 
                                           ) : (
                                                 <> <Ionicons name="person-add" />  Subscribe</>
@@ -54,21 +54,21 @@ const SubscribeButton = ({ targetUser_id, targetUserSubscribers }) => {
                   ) : (
                         <TouchableOpacity
                               onPress={() => handleSubscription('unsubscribe', setIsLoading, user._id, targetUser_id, user.notificationPreferences.fcmToken, setSubscribed)}
-                  style={styles.unsubscribeButton}
+                              style={styles.unsubscribeButton}
                         >
-                  <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>
-                              {isLoading ? (
-                                            <ActivityIndicator size="small" color="#fff" />
+                              <View style={styles.buttonContent}>
+                                    <Text style={styles.buttonText}>
+                                          {isLoading ? (
+                                                <ActivityIndicator size="small" color="#fff" />
 
-                              ) : (
-                                    <> <Ionicons name="person-remove" />  Unsubscribe</>
-                              )}
-                        </Text>
-                  </View>
-            </TouchableOpacity>
-      )
-}
+                                          ) : (
+                                                <> <Ionicons name="person-remove" />  Unsubscribe</>
+                                          )}
+                                    </Text>
+                              </View>
+                        </TouchableOpacity>
+                  )
+                  }
             </View >
       );
 };
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
             flexDirection: 'row',
       },
       subscribeButton: {
-            flex:1,
+            flex: 1,
             flexDirection: 'row',
             backgroundColor: '#111827',
             padding: 8,
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
             justifyContent: 'center',
       },
       unsubscribeButton: {
-            flex:1,
+            flex: 1,
             flexDirection: 'row',
             backgroundColor: '#b91c1c',
             padding: 8,
             borderRadius: 4,
             alignItems: 'center',
             justifyContent: 'center',
-            
+
       },
       buttonContent: {
             flexDirection: 'row',
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
             fontSize: 16,
 
       },
-     
+
 });
 
 export default SubscribeButton;

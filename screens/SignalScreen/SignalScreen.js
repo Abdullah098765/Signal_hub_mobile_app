@@ -62,7 +62,7 @@ const SignalScreen = ({ route }) => {
                   
                   <AdditionalInfo signal={signal} />
                   <SignalProviderInfoOnSignalPage user={user} signal={signal} />
-                  <CommenSection user={user} />
+                  <CommenSection signal={signal}user={user}  />
                   <View style={{ height: 30 }}></View>
 
             </ScrollView>

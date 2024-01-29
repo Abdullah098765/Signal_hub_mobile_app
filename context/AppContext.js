@@ -1,5 +1,5 @@
 // AppContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated } from 'react-native';
 
@@ -71,6 +71,11 @@ export const AppProvider = ({ children }) => {
     checkLoginStatus();
   }, []);
 
+  const scrollViewRef = useRef();
+
+  const scrollToBottom = () => {
+    scrollViewRef?.current?.scrollToEnd({ animated: true });
+  };
 
   const [scrollY, setScrollY] = useState(new Animated.Value(0));
   const [diffClamp, setDiffClamp] = useState(Animated.diffClamp(scrollY, 0, 50));
@@ -108,7 +113,8 @@ export const AppProvider = ({ children }) => {
       setScrollY,
       handleScroll,
       navbarTranslateY,
-      currentProfileRoute, setCurrentProfileRoute
+      currentProfileRoute, setCurrentProfileRoute,
+      scrollToBottom, scrollViewRef
     }}>
       {children}
     </AppContext.Provider >

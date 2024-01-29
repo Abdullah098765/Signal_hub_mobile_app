@@ -8,7 +8,7 @@ const UserProfileLink = ({ signal }) => {
 
   const handlePress = () => {
     // Navigate to the signal provider page when clicked
-    navigation.navigate('SignalProvider', { fIdHash: signal.signalProvider.fIdHash });
+    navigation.navigate('UserProfile', { fIdHash: signal.signalProvider.fIdHash });
   };
 
   return (

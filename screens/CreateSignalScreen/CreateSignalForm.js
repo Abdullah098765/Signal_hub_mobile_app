@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
+import useAction from '../../hooks/useAction';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigation } from '@react-navigation/native';
 
 const CreateSignalForm = () => {
+      const { user } = useAuth()
       const [pair, setPair] = useState('');
       const [explaination, setExplaination] = useState('');
       const [entry1, setEntry1] = useState('');
@@ -12,8 +16,8 @@ const CreateSignalForm = () => {
       const [takeProfit2, setTakeProfit2] = useState('');
       const [takeProfit3, setTakeProfit3] = useState('');
       const [stopLoss, setStopLoss] = useState('');
-      const [duration, setDuration] = useState(Date.now() + 600000);
-      const [market, setMarket] = useState('Any');
+      const [duration, setDuration] = useState(Date.now() + 8.64e+7);
+      const [market, setMarket] = useState('Crypto');
       const [longShort, setLongShort] = useState('Long');
 
       const [pairError, setPairError] = useState(false);
@@ -24,13 +28,17 @@ const CreateSignalForm = () => {
       const [takeProfit2Error, setTakeProfit2Error] = useState(false);
       const [takeProfit3Error, setTakeProfit3Error] = useState(false);
       const [stopLossError, setStopLossError] = useState(false);
-      const [selectedDuration, setSelectedDuration] = useState('10m'); // Default duration
+      const [selectedDuration, setSelectedDuration] = useState('1d'); // Default duration
+      const [isSignalPosting, setIsSignalPosting] = useState(false);
+
+      const { handleSignalSubmit } = useAction()
 
       const handlePairChange = (text) => {
             console.log(text);
             setPair(text.toUpperCase());
             setPairError(false);
       };
+      const navigation = useNavigation()
 
       const handleNumericInputChange = (fieldName, text) => {
             // Remove non-numeric characters except for a single decimal point
@@ -74,7 +82,7 @@ const CreateSignalForm = () => {
             }
       };
 
-      const handleSubmit = () => {
+      const handleSubmit = async () => {
             // Validate input fields on submit
             if (!pair) setPairError(true);
             if (!explaination) setExplainationError(true);
@@ -107,6 +115,42 @@ const CreateSignalForm = () => {
             }
 
             // Proceed with form submission if all fields are filled
+
+
+            const signalData = {
+                  pair,
+                  explanation: explaination,
+                  entry1,
+                  entry2,
+                  takeProfit1,
+                  takeProfit2,
+                  takeProfit3,
+                  stopLoss,
+                  cryptoOrStock: market,
+                  duration,
+                  longOrShort: longShort,
+                  signalProvider: user._id,
+                  status: 'Active'
+            };
+
+            const signal = await handleSignalSubmit(signalData, setIsSignalPosting)
+            if (signal) {
+                  setPair('')
+                  setExplaination("")
+                  setEntry1('')
+                  setEntry2('')
+                  setTakeProfit1('')
+                  setTakeProfit2('')
+                  setTakeProfit3('')
+                  setStopLoss('')
+                  setMarket("Crypto")
+                  setSelectedDuration("1d")
+                  setDuration(Date.now() + 8.64e+7)
+                  setLongShort("Long")
+                  setStopLossError(false)
+                  navigation.navigate('Signal', { signalId: signal._id });
+            }
+
             console.log({
                   pair,
                   explaination,
@@ -122,10 +166,8 @@ const CreateSignalForm = () => {
             });
       };
 
-      // Declare inputFields at the top
       const inputFields = ['Entry 1', 'Entry 2', 'Take Profit 1', 'Take Profit 2', 'Take Profit 3', 'Stop Loss'];
 
-      // Declare refs at the top of your functional component
       const pairInputRef = React.useRef();
       const explanationInputRef = React.useRef();
       const numericInputRefs = inputFields.map(() => React.useRef());
@@ -378,9 +420,19 @@ const CreateSignalForm = () => {
                                           style={styles.fullWidthInput}
                                           onValueChange={handleMarketChange}>
                                           <Picker.Item label="Crypto" value="Crypto" />
-                                          <Picker.Item label="Forex" value="Forex" />
+                                          {/* <Picker.Item label="All" value="All Markets" /> */}
                                           <Picker.Item label="Currency" value="Currency" />
-                                          <Picker.Item label="Other" value="Other" />
+                                          <Picker.Item label="Stock" value="Stock" />
+                                          <Picker.Item label="Gold" value="Gold" />
+                                          <Picker.Item label="Commodities" value="Commodities" />
+                                          <Picker.Item label="Indices" value="Indices" />
+                                          <Picker.Item label="Bonds" value="Bonds" />
+                                          <Picker.Item label="Options" value="Options" />
+                                          <Picker.Item label="ETFs" value="ETFs" />
+                                          <Picker.Item label="Cryptocurrency Pairs" value="Crypto Pairs" />
+                                          <Picker.Item label="Forex Crosses" value="Forex Crosses" />
+                                          <Picker.Item label="Precious Metals" value="Precious Metals" />
+
                                     </Picker>
                               </View>
                               <View style={{ backgroundColor: "gray", width: 0.7 }} />
@@ -402,7 +454,7 @@ const CreateSignalForm = () => {
                         <View style={{ backgroundColor: "gray", height: 0.7 }} />
 
                         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                              <Text style={styles.buttonText}>Post Signal</Text>
+                              {isSignalPosting ? <Text style={styles.buttonText}>Posting</Text> : <Text style={styles.buttonText}>Post Signal</Text>}
                         </TouchableOpacity>
                   </View>
 

@@ -4,7 +4,7 @@ import { AppContext } from '../../../context/AppContext';
 import ProfileSignalCards from "./ProfileSignalCards.js"
 import Reviews from "./Reviews.js"
 import About from "./About.js"
-const Sections = ({ user }) => {
+const Sections = ({ targetUser, isMyProfile }) => {
       const { currentProfileRoute } = useContext(AppContext);
       return (
             <View style={{
@@ -12,8 +12,8 @@ const Sections = ({ user }) => {
 
             }}>
                   {currentProfileRoute !== "Reviews" && currentProfileRoute !== "About" && <ProfileSignalCards name={currentProfileRoute} />}
-                  {currentProfileRoute === "Reviews" && <Reviews user = {user} />}
-                  {currentProfileRoute === "About" && <About about={user.about} />}
+                  {currentProfileRoute === "Reviews" && <Reviews targetUser={targetUser} isMyProfile={isMyProfile} />}
+                  {currentProfileRoute === "About" && <About about={targetUser.about} />}
             </View>
       );
 }

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import ProfilePicture from '../../../components/ProfilePicture';
+import useAction from '../../../hooks/useAction';
+import ImageSelector from '../../../components/ImageSelector';
+import ImageModal from '../../../components/ImageModal';
+import { useAuth } from '../../../hooks/useAuth';
 
-const ReviewCard = ({ review }) => (
-      <View style={styles.reviewCard}>
+const ReviewCard = ({ review }) => {
+      const [imageModalVisible, setImageModalVisible] = useState(false);
+
+
+      return <View style={styles.reviewCard}>
             <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
                   <View style={styles.userContainer}>
                         {review.rProfilePicture && (
@@ -21,34 +28,37 @@ const ReviewCard = ({ review }) => (
 
 
             {review.image && (
-                  <TouchableOpacity onPress={() => handleImageOpen(review.image)}>
+                  <TouchableOpacity onPress={() => setImageModalVisible(true)}>
                         <Image source={{ uri: review.image }} style={styles.reviewImage} />
                   </TouchableOpacity>
             )}
-      </View>
-);
+            {review.image && <ImageModal urls={[review.image]} visible={imageModalVisible} setImageModalVisible={setImageModalVisible} />}
 
-const ReviewsInput = ({ user, newReview, handleSelectImage, handleReviewSubmit, loading }) => (
-      <>
+      </View>
+};
+
+const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
+      const { user } = useAuth()
+      const [newReview, setNewReview] = useState();
+      const { handleReviewSubmit } = useAction()
+      const [loading, setLoading] = useState(false);
+      const [imageUrl, setImageUrl] = useState();
+      return <>
             <View style={styles.reviewInputContainer}>
                   <TextInput
                         value={newReview}
-                        // onChangeText={(text) => setNewReview(text)}
+                        onChangeText={(text) => setNewReview(text)}
                         style={styles.input}
                         placeholder='Write your review...'
                         multiline
                         placeholderTextColor={"#111827"}
                   />
-                  <TouchableOpacity onPress={handleSelectImage} style={styles.imageUploadButton}>
-                        {'imageUrl' ? (
-                              <Text style={[styles.buttonText, { color: "#000" }]}>✓</Text>
-                        ) : (
-                              <Text style={styles.buttonText}>📷</Text>
-                        )}
-                  </TouchableOpacity>
+                  <ImageSelector imageUrl={imageUrl} setImageUrl={setImageUrl} />
+
 
             </View>
-            <TouchableOpacity onPress={handleReviewSubmit} style={styles.submitButton} disabled={loading}>
+            <TouchableOpacity onPress={() => handleReviewSubmit(setLoading, user, newReview, imageUrl, targetUser._id, setReviews, reviews, setNewReview, setImageUrl)} style={styles.submitButton} disabled={loading}>
+
                   {loading ? (
                         <Text style={styles.buttonText}>Loading...</Text>
                   ) : (
@@ -56,12 +66,13 @@ const ReviewsInput = ({ user, newReview, handleSelectImage, handleReviewSubmit, 
                   )}
             </TouchableOpacity>
       </>
-);
+};
 
-const Reviews = ({ user, newReview, handleSelectImage, handleReviewSubmit, loading, handleImageOpen }) => {
+const Reviews = ({ targetUser, isMyProfile }) => {
 
-      const reviews = user?.reviews
-      if (!user) return <Text>No Reviews</Text>
+      const [reviews, setReviews] = useState(targetUser?.reviews);
+
+      if (!targetUser) return <Text>No Reviews</Text>
 
       return < View style={styles.container} >
             <ScrollView style={styles.reviewsContainer}>
@@ -70,13 +81,11 @@ const Reviews = ({ user, newReview, handleSelectImage, handleReviewSubmit, loadi
                   ))}
             </ScrollView>
 
-            <ReviewsInput
-                  user={user}
-                  newReview={newReview}
-                  handleSelectImage={handleSelectImage}
-                  handleReviewSubmit={handleReviewSubmit}
-                  loading={loading}
-            />
+            {!isMyProfile && <ReviewsInput
+                  targetUser={targetUser}
+                  reviews={reviews}
+                  setReviews={setReviews}
+            />}
       </View >
 };
 
@@ -141,9 +150,7 @@ const styles = StyleSheet.create({
             color: '#111827',
             backgroundColor: '#EDEDED',
             borderRadius: 8,
-
-
-
+            paddingRight: 10
       },
       input: {
             flex: 1,
@@ -152,6 +159,7 @@ const styles = StyleSheet.create({
             borderRadius: 8,
             marginRight: 8,
             color: '#111827',
+
             // placeholder:'#000'
 
       },

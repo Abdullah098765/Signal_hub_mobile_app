@@ -4,6 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../hooks/useAuth';
 import ProviderCareer from '../../components/MainComponents/ProviderCareer.js'
 import SubscribeButton from '../../components/Buttons/SubscribeButton.js';
+import WriteAReviewButton from '../../components/Buttons/WriteAReviewButton.js';
+import ActionButtonsForUser from '../UserProfileScreen/ProfileComponents/ActionButtonsForUser.js';
 
 const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading }) => {
   const [IsThisSignalProvidedByMe, setIsThisSignalProvidedByMe] = useState(false);
@@ -46,7 +48,7 @@ const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading
           )} */}
 
           <View style={{ justifyContent: "flex-end", alignItems: "flex-end", flex: 1 }}>
-            {!IsThisSignalProvidedByMe ? <SubscribeButton targetUser_id={signal.signalProvider._id} targetUserSubscribers={signal.signalProvider.Subscribers} />
+            {!IsThisSignalProvidedByMe ? <ActionButtonsForUser targetUser={signal.signalProvider}/>
               : <TouchableOpacity
                 onPress={() => {
                   // setRouterLoading(true);
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    width:"100%"
+    width: "100%"
   },
   profileButtonText: {
     color: 'white',

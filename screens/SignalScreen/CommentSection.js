@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import ProfilePicture from '../../components/ProfilePicture';
+import useAction from '../../hooks/useAction';
+import ImagePicker from 'react-native-image-picker';
+import ImageSelector from '../../components/ImageSelector';
+import ImageModal from '../../components/ImageModal';
 
-const CommentCard = ({ comment }) => (
-      <View style={styles.commentCard}>
+
+const CommentCard = ({ comment }) => {
+      const [imageModalVisible, setImageModalVisible] = useState(false);
+
+      return <View style={styles.commentCard}>
             <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
                   <View style={styles.userContainer}>
-                        {comment.rProfilePicture && (
-                              <ProfilePicture source={comment.rProfilePicture} size={20} />
+                        {comment.cProfilePicture && (
+                              <ProfilePicture source={comment.cProfilePicture} size={20} />
                         )}
-                        <Text style={styles.displayName}>{comment.rDisplayName}</Text>
+                        <Text style={styles.displayName}>{comment.cDisplayName}</Text>
                   </View>
                   <Text style={styles.timestamp}>
                         {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
@@ -18,49 +25,52 @@ const CommentCard = ({ comment }) => (
             </View>
             <Text style={styles.commentText}>{comment.text}</Text>
             {comment.image && (
-                  <TouchableOpacity onPress={() => handleImageOpen(comment.image)}>
+                  <TouchableOpacity onPress={() => setImageModalVisible(true)}>
                         <Image source={{ uri: comment.image }} style={styles.commentImage} />
                   </TouchableOpacity>
             )}
+            {comment.image && <ImageModal urls={[comment.image]} visible={imageModalVisible} setImageModalVisible={setImageModalVisible} />}
       </View>
-);
+}
 
-const CommentsInput = ({ user, newComment, handleCommentSubmit, loading }) => (
-      <>
+const CommentsInput = ({ user, newComment, setNewComment, signalId, setComments, comments }) => {
+
+      const { handleCommentSubmit } = useAction()
+
+      const [loading, setLoading] = useState(false);
+      const [imageUrl, setImageUrl] = useState();
+      return <>
             <View style={styles.commentInputContainer}>
                   <TextInput
                         value={newComment}
-                        // onChangeText={(text) => setNewComment(text)}
+                        onChangeText={(text) => setNewComment(text)}
                         style={styles.input}
                         placeholder='Write your comment...'
                         multiline
                         placeholderTextColor={"#111827"}
                   />
-                  <TouchableOpacity style={styles.imageUploadButton}>
-                        {'imageUrl' ? (
-                              <Text style={[styles.buttonText, { color: "#000" }]}>✓</Text>
-                        ) : (
-                              <Text style={styles.buttonText}>📷</Text>
-                        )}
-                  </TouchableOpacity>
+                  <ImageSelector imageUrl={imageUrl} setImageUrl={setImageUrl} />
+
             </View>
-            <TouchableOpacity onPress={handleCommentSubmit} style={styles.submitButton} disabled={loading}>
+            <TouchableOpacity onPress={() => handleCommentSubmit(setLoading, user, newComment, imageUrl, signalId, setComments, comments, setNewComment, setImageUrl)} style={styles.submitButton} disabled={loading}>
                   {loading ? (
-                        <Text style={styles.buttonText}>Loading...</Text>
+                        <Text style={styles.buttonText}>Posting...</Text>
                   ) : (
                         <View style={{ flexDirection: "row", }}>
-                              {user.profilePicture && <ProfilePicture size={20} source={user.profilePicture} />}
-                              <Text style={styles.buttonText}> Comment</Text>
+                              {user?.profilePicture && <ProfilePicture size={20} source={user.profilePicture} />}
+                              <Text style={styles.buttonText}>  Comment</Text>
                         </View>
                   )}
             </TouchableOpacity>
       </>
-);
 
-const CommentSection = ({ user, newComment, handleCommentSubmit, loading }) => {
+}
+const CommentSection = ({ signal, user }) => {
 
-      const comments = user?.reviews;
-      if (!user) return <Text>No Comments</Text>;
+
+      const [comments, setComments] = useState(signal.comments)
+      const [newComment, setNewComment] = useState('');
+      if (!comments) return <Text>No Comments</Text>;
 
       return (
             <View style={styles.container}>
@@ -73,8 +83,10 @@ const CommentSection = ({ user, newComment, handleCommentSubmit, loading }) => {
                   <CommentsInput
                         user={user}
                         newComment={newComment}
-                        handleCommentSubmit={handleCommentSubmit}
-                        loading={loading}
+                        setNewComment={setNewComment}
+                        signalId={signal._id}
+                        comments={comments}
+                        setComments={setComments}
                   />
             </View>
       );
@@ -127,21 +139,23 @@ const styles = StyleSheet.create({
             backgroundColor: '#EDEDED',
             borderRadius: 8,
             marginTop: 16,
+            paddingHorizontal: 10
       },
       input: {
             flex: 1,
             backgroundColor: '#EDEDED',
-            padding: 8,
+            padding: 5,
             borderRadius: 8,
             marginRight: 8,
             color: '#111827',
       },
       submitButton: {
             padding: 10,
-            borderRadius: 80,
+            borderRadius: 5,
             backgroundColor: '#111827',
             alignItems: "center",
             marginTop: 10,
+            marginBottom: 40,
       },
       buttonText: {
             color: 'white',

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,22 +8,88 @@ import UserInfoSection from './ProfileComponents/UserInfoSection.js';
 import SectionNavigate from './ProfileComponents/SectionNavigate.js';
 import Sections from './ProfileComponents/Sections.js';
 import { AppContext } from '../../context/AppContext.js';
+import { useRoute } from '@react-navigation/native';
+import SignalPageSkeleton from '../SignalScreen/Skeleton.js';
 
 
-const UserProfileComponent = ({ formatRegistrationDate }) => {
+const UserProfileComponent = ({  }) => {
+
       const { user } = useAuth()
+      const [_user, set_User] = useState();
 
-      const { handleScroll } = useContext(AppContext);
+      const router = useRoute()
+      const [isMyProfile, setIsMyProfile] = useState(true);
+      const { currentProfileRoute, setCurrentProfileRoute, scrollToBottom, scrollViewRef, handleScroll } = useContext(AppContext);
 
-      if (!user) return
+
+      const getTargetUser = (pid) => {
+            var myHeaders = new Headers();
+            var raw = JSON.stringify({
+                  "uid": pid
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+
+            fetch("https://signal-hub.vercel.app/api/get-user", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                        set_User(JSON.parse(result))
+
+                  })
+                  .catch(error => console.log('error', error));
+
+      };
+
+
+
+      useEffect(() => {
+            if (router?.params?.fIdHash === user?.fIdHash) {
+
+                  console.log('My Profile is True');
+                  setIsMyProfile(true)
+                  set_User(user)
+            }
+            else if (!router.params) {
+                  console.log('My Page');
+                  setIsMyProfile(true)
+                  set_User(user)
+            }
+            else {
+                  console.log('My Profile is false');
+                  setIsMyProfile(false)
+                  getTargetUser(router.params.fIdHash)
+            }
+
+
+      }, []);
+      useEffect(() => {
+
+            if (router?.params?.writeAReview && !isMyProfile) {
+                  console.log('writeAReview', router?.params?.writeAReview);
+
+                  scrollToBottom()
+                  setCurrentProfileRoute("Reviews")
+                  // setIsMyProfile(false)
+                  // getTargetUser(router.params.fIdHash)
+            }
+
+      }, [scrollViewRef, _user]);
+
+      if (!_user) return <SignalPageSkeleton />
+
       return (
             <View style={{ padding: 5, backgroundColor: "#e5e7eb", }}>
-                  <ScrollView style={{ padding: 0, }} onScroll={({ nativeEvent }) => { handleScroll({ nativeEvent }) }} scrollEventThrottle={16}>
-                        <ProfileHeader user={user} />
-                        <Careere user={user} />
-                        <UserInfoSection personalInformation={user.personalInfo} />
-                        <SectionNavigate />
-                        <Sections user={user} />
+                  <ScrollView ref={scrollViewRef} style={{ padding: 0, }} onScroll={({ nativeEvent }) => { handleScroll({ nativeEvent }) }} scrollEventThrottle={16}>
+                        <ProfileHeader isMyProfile={isMyProfile} user={_user} />
+                        <Careere isMyProfile={isMyProfile} user={_user} />
+                        <UserInfoSection isMyProfile={isMyProfile} personalInformation={_user.personalInfo} />
+                        <SectionNavigate isMyProfile={isMyProfile} />
+                        <Sections isMyProfile={isMyProfile} targetUser={_user} />
                   </ScrollView>
             </View>
       );

@@ -13,12 +13,12 @@ const HomeScreen = () => {
     handleScroll,
     navbarTranslateY } = useContext(AppContext);
   const route = useRoute()
-
+const [page, setPage] = useState(1);
   const getSignals = () => {
     setIsSignalsLoading(true);
 
     var raw = JSON.stringify({
-      skip: signals.length
+      skip: page
     });
 
     var requestOptions = {
@@ -47,14 +47,13 @@ const HomeScreen = () => {
     const isCloseToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
 
     if (isCloseToBottom && !isSignalsLoading) {
-      getSignals();
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
   useEffect(() => {
-    console.log(route);
     getSignals();
-  }, [route.name]);
+  }, [page]);
 
   return (
     <ScrollView
@@ -67,7 +66,7 @@ const HomeScreen = () => {
       scrollEventThrottle={16}
     >
       <View style={{ marginTop: 36 }}>
-        {signals.map((signal) => (
+        {signals.map((signal, index) => (
           <SignalCard signal={signal} key={signal._id} />
         ))}
         {isSignalsLoading && <ActivityIndicator size="large" color="#0000ff" />}

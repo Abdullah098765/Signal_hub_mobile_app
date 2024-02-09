@@ -23,7 +23,7 @@ const ProfileHeader = ({ user, isMyProfile }) => {
                         {isMyProfile && <LogoutButton />}
                   </View>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, position: "absolute", top: 10, right: 10 }}>
-                        <ShareButton />
+                        <ShareButton type={'Signal Provider'} url={"https://signal-hub.vercel.app/signal-provider/" + user.fIdHash}/>
                   </View>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginVertical: 0, }}>
                         <ProfilePicture

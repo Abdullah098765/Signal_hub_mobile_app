@@ -1,4 +1,5 @@
 import { useAuth } from "./useAuth";
+import Share from 'react-native-share';
 
 const useAction = () => {
 
@@ -626,7 +627,19 @@ const useAction = () => {
 
 
       };
+      const handleShare = async ( url, type ) => {
+            try {
+              const shareOptions = {
+                title: type + ' Sharing',
+                message: `Check out this ${type}: ${url}`,
+              };
+        
+              await Share.open(shareOptions);
+            } catch (error) {
+            }
+          };
       return {
+            handleShare,
             handleLikeClick,
             handleDislikeClick,
             handleFollow,

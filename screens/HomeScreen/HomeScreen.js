@@ -3,6 +3,8 @@ import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import SignalCard from '../../components/MainComponents/card';
 import { AppContext } from '../../context/AppContext';
 import { useRoute } from '@react-navigation/native';
+import SkeletonCard from '../../components/SkeletonCard';
+import Navbar from '../../components/MainComponents/navbar';
 
 const HomeScreen = () => {
   const [signals, setSignals] = useState([]);
@@ -12,8 +14,11 @@ const HomeScreen = () => {
     setScrollY,
     handleScroll,
     navbarTranslateY } = useContext(AppContext);
+
   const route = useRoute()
-const [page, setPage] = useState(1);
+
+  const [page, setPage] = useState(1);
+
   const getSignals = () => {
     setIsSignalsLoading(true);
 
@@ -30,7 +35,16 @@ const [page, setPage] = useState(1);
     fetch("https://signal-hub.vercel.app/api/get-signals", requestOptions)
       .then(response => response.json())
       .then(newSignals => {
-        setSignals(prevSignals => [...prevSignals, ...newSignals]);
+        setSignals(prevSignals => {
+          // Check if each signal in newSignals already exists in prevSignals based on a specific condition
+          let uniqueNewSignals = newSignals.filter(newSignal =>
+            !prevSignals.some(prevSignal => prevSignal._id === newSignal._id)
+          );
+
+          let updatedSignals = prevSignals.concat(uniqueNewSignals);
+          console.log("All Signals:", updatedSignals);
+          return updatedSignals; // This value will be the new state
+        });
         setIsSignalsLoading(false);
       })
       .catch(error => {
@@ -38,7 +52,6 @@ const [page, setPage] = useState(1);
         setIsSignalsLoading(false);
       });
   };
-
   const handleScrollForSignals = (event) => {
     handleScroll(event)
 
@@ -69,7 +82,9 @@ const [page, setPage] = useState(1);
         {signals.map((signal, index) => (
           <SignalCard signal={signal} key={signal._id} />
         ))}
-        {isSignalsLoading && <ActivityIndicator size="large" color="#0000ff" />}
+        {isSignalsLoading && Array.from({ length: 2 }).map((_, index) => (
+          <SkeletonCard key={index} />
+        ))}
       </View>
     </ScrollView>
   );

@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
             paddingVertical: 10,
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: 45,
             elevation: 5,
             shadowColor: "#000",
             margin: 5

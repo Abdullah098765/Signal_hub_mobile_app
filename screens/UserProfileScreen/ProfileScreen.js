@@ -9,7 +9,7 @@ import SectionNavigate from './ProfileComponents/SectionNavigate.js';
 import Sections from './ProfileComponents/Sections.js';
 import { AppContext } from '../../context/AppContext.js';
 import { useRoute } from '@react-navigation/native';
-import SignalPageSkeleton from '../SignalScreen/Skeleton.js';
+import SignalPageSkeleton from '../../components/SkeletonPage.js';
 
 
 const UserProfileComponent = ({  }) => {
@@ -84,7 +84,7 @@ const UserProfileComponent = ({  }) => {
 
       return (
             <View style={{ padding: 5, backgroundColor: "#e5e7eb", }}>
-                  <ScrollView ref={scrollViewRef} style={{ padding: 0, }} onScroll={({ nativeEvent }) => { handleScroll({ nativeEvent }) }} scrollEventThrottle={16}>
+                  <ScrollView ref={scrollViewRef} style={{ paddingTop:40 }} onScroll={({ nativeEvent }) => { handleScroll({ nativeEvent }) }} scrollEventThrottle={16}>
                         <ProfileHeader isMyProfile={isMyProfile} user={_user} />
                         <Careere isMyProfile={isMyProfile} user={_user} />
                         <UserInfoSection isMyProfile={isMyProfile} personalInformation={_user.personalInfo} />

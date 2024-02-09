@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
             margin: 5,
             color: '#111827',
             marginTop: 0,
+            marginBottom:30
 
       },
       reviewsContainer: {

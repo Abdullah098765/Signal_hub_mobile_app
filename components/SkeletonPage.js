@@ -107,7 +107,7 @@ const SignalPageSkeleton = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop: 50
+    paddingTop: 45
   },
   header: {
     flexDirection: 'row',

@@ -10,6 +10,7 @@ import { Animated } from "react-native";
 import CreateSignal from "../screens/CreateSignalScreen/CreateSignal";
 import Subscriptions from "../screens/Subscriptions/Subscriptions.js";
 import FollowingSignals from "../screens/FollowingSignals/FollowingSignals.js";
+import Navbar from "../components/MainComponents/navbar.js";
 
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +28,9 @@ export const BottomTabNavigator = () => {
                   //   inactiveTintColor: 'gray',
                   // }}
                   screenOptions={({ route }) => ({
-                        headerShown: false,
+                        header: (props) => <Navbar title="Home" {...props} />,
+                        headerShown: true, // Ensure header is shown
+
                         tabBarStyle: {
                               position: "absolute",
                               backgroundColor: "#111827",
@@ -35,12 +38,13 @@ export const BottomTabNavigator = () => {
                         },
                         tabBarActiveTintColor: '#818CF8',
                         tabBarInactiveTintColor: '#fff',
-                        tabBarVisible: false, // Add tabBarVisible option
+                        // tabBarVisible: false, // Add tabBarVisible option
                   })}
             >
+
                   <Tab.Screen
                         name="Home"
-                        component={AppNavigator}
+                        component={HomeScreen}
                         options={{
                               tabBarIcon: ({ color, size }) => (
                                     <Ionicons name="home" color={color} size={size} />

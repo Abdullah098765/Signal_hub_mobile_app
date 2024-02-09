@@ -1,4 +1,7 @@
+import { useAuth } from "./useAuth";
+
 const useAction = () => {
+
 
       const handleLikeClick = (liked, signalId, likerId, disliked, setLiked, likeCount, setLikeCount, setDisliked, dislikeCount, setDislikeCount) => {
             if (!liked) {
@@ -387,7 +390,7 @@ const useAction = () => {
                   if (response.ok) {
                         // Handle successful response (e.g., show a success message)
                         const signal = await response.json()
-                        console.log('Signal created successfully!',signal);
+                        console.log('Signal created successfully!', signal);
                         setIsSignalPosting(false)
                         return signal
                   } else {
@@ -404,6 +407,225 @@ const useAction = () => {
             }
       };
 
+      
+
+      function addNeutral(signalId, userId,  ) {
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'neutralId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/neutral-count", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                        console.log(result)
+                  })
+                  .catch(error => console.log('error', error));
+
+            return "Neutral counted"
+      }
+      function addGood(signalId, userId,  ) {
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'goodcounterId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/good-count", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+
+                        console.log(result)
+                  })
+                  .catch(error => console.log('error', error));
+
+            return "Good counted"
+
+      }
+      function badCount(signalId, userId,) {
+
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'badCounterId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/bad-count", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                        console.log(result)
+                  })
+                  .catch(error => console.log('error', error));
+      }
+
+      function goodDiscount(signalId, userId,) {
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'goodDiscounterId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/good-discount", requestOptions)
+                  .then(response => response.text())
+                  .then(result => console.log(result))
+                  .catch(error => console.log('error', error));
+
+      }
+      function badDiscount(signalId, userId,) {
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'badCounterId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/bad-discount", requestOptions)
+                  .then(response => response.text())
+                  .then(result => console.log(result))
+                  .catch(error => console.log('error', error));
+
+      }
+      function neutralDiscount(signalId, userId,) {
+            var myHeaders = new Headers();
+            myHeaders.append("a", "dni");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                  "signalId": signalId,
+                  'counterId': userId
+            });
+
+            var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+            };
+            fetch("https://signal-hub.vercel.app/api/neutral-discount", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                        console.log(result)
+                  })
+                  .catch(error => console.log('error', error));
+      }
+
+      const handleGoodClick = (signalId, userId, setCurrentVote, currentVote) => {
+
+            if (currentVote !== 'good') {
+                  addGood(signalId, userId)
+                  setCurrentVote('good')
+                  if (currentVote === 'bad') {
+
+                        badDiscount(signalId, userId)
+
+                  }
+                  if (currentVote === 'neutral') {
+
+                        neutralDiscount(signalId, userId)
+
+                  }
+
+            }
+            else {
+                  goodDiscount(signalId, userId)
+                  setCurrentVote(null)
+
+            }
+      }
+      const handleNeutralClick = (signalId, userId, setCurrentVote, currentVote) => {
+            if (currentVote !== 'neutral') {
+                  addNeutral(signalId, userId,)
+                  setCurrentVote('neutral')
+
+                  if (currentVote === 'bad') {
+
+                        badDiscount(signalId, userId)
+
+                  }
+                  if (currentVote === 'good') {
+
+                        goodDiscount(signalId, userId)
+
+                  }
+            }
+            else {
+                  neutralDiscount(signalId, userId)
+                  setCurrentVote('none')
+
+            }
+
+
+      };
+
+      const handleBadClick = (signalId, userId, setCurrentVote, currentVote) => {
+            if (currentVote !== 'bad') {
+
+                  badCount(signalId, userId)
+                  setCurrentVote('bad')
+
+                  if (currentVote === 'neutral') {
+
+                        neutralDiscount(signalId, userId)
+
+                  }
+                  if (currentVote === 'good') {
+
+                        goodDiscount(signalId, userId)
+
+                  }
+            }
+            else {
+                  badDiscount(signalId, userId)
+                  setCurrentVote('none')
+            }
+
+
+      };
       return {
             handleLikeClick,
             handleDislikeClick,
@@ -412,7 +634,8 @@ const useAction = () => {
             handleSubscription,
             handleCommentSubmit,
             handleReviewSubmit,
-            handleSignalSubmit
+            handleSignalSubmit,
+            handleGoodClick, handleNeutralClick, handleBadClick
 
       }
 }

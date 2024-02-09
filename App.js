@@ -16,6 +16,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen';
 import { AppProvider } from './context/AppContext';
 import Navbar from './components/MainComponents/navbar';
 import { BottomTabNavigator } from './navigation/MyTabs';
+import AppNavigator from './navigation/AppNavigator';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,8 +28,10 @@ function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Navbar title="Home" />
+        <AppNavigator>
+       
         <BottomTabNavigator />
+        </AppNavigator>
       </NavigationContainer>
     </AppProvider>
   );

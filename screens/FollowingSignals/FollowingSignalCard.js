@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import CountdownClock from './CountdownClock'; // Assuming you have a CountdownClock component
-// import GoodBadButtons from './GoodBadButtons'; // Assuming you have a GoodBadButtons component
+import GoodBadButtons from './GoodBadButtons.js'; // Assuming you have a GoodBadButtons component
 import { useNavigation } from '@react-navigation/native';
 
 const FollowingSignalCard = ({ signal }) => {
-      const navigation = useNavigation();
+      const navigation = useNavigation(); // React Navigation hook
+      const handlePress = () => {
+            navigation.navigate('Signal', { signalId: signal._id });
+      };
 
       return (
             <TouchableOpacity
                   key={signal._id}
                   style={styles.signalCard}
-                  onPress={() => {
-                        navigation.navigate('SignalDetails', { signalId: signal._id });
-                  }}
+                  onPress={handlePress}
             >
 
                   <View style={styles.addInfoContainer}>
@@ -21,7 +22,7 @@ const FollowingSignalCard = ({ signal }) => {
 
                         <View
                               style={{
-                                    backgroundColor: signal.longOrShort === 'Long' ? '#00cc00' : '#ff0000',
+                                    backgroundColor: signal.longOrShort === 'Long' ? 'green' : '#ff0000',
                                     ...styles.signalTypeBadge,
                               }}
                         >
@@ -138,9 +139,9 @@ const styles = StyleSheet.create({
             alignItems: "center",
             width: "100%"
       },
-      entryEtcContainer:{
-            flexDirection:"row",
-            justifyContent:'space-around'
+      entryEtcContainer: {
+            flexDirection: "row",
+            justifyContent: 'space-around'
       }
 });
 

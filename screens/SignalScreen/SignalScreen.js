@@ -8,7 +8,7 @@ import { AppContext } from '../../context/AppContext.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import Reviews from '../UserProfileScreen/ProfileComponents/Reviews.js';
 import CommenSection from './CommentSection.js';
-import Skeleton from "./Skeleton.js"
+import Skeleton from "../../components/SkeletonPage.js"
 import ActionButtons from "./ActionButtons.js"
 
 

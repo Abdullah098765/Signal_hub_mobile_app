@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import SubscribeButton from '../../../components/Buttons/SubscribeButton';
-import WriteAReviewButton from '../../../components/Buttons/WriteAReviewButton';
+import SubscribeButton from './SubscribeButton';
+import WriteAReviewButton from './WriteAReviewButton';
 
 const ActionButtonsForUser = ({ targetUser }) => {
       return (

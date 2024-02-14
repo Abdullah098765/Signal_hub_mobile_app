@@ -140,7 +140,8 @@ export const useAuth = () => {
     setUser,
     login,
     logout,
-    isLoggedIn
+    isLoggedIn,
+    getUser
 
   };
 };

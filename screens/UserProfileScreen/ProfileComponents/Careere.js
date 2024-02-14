@@ -1,114 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import useGetData from '../../../hooks/useGetData';
 const Careere = ({ user }) => {
+
+      function CareereInfoListItem({ title, iconName, color }) {
+            const { getCounts } = useGetData()
+
+            const [count, setCount] = useState();
+            useEffect(() => {
+                  async function effect() {
+                        console.log(await getCounts(title, user._id));
+                  }
+                  effect()
+
+            }, [user]);
+
+            return <View style={styles.gridContainer}>
+                  <View style={styles.gridItem}>
+                        <View style={styles.gridItemContent}>
+                              <View style={[styles.iconContainer, { borderWidth: 1, borderColor: color }]}>
+                                    <Ionicons name={iconName} color={color} size={22} />
+                              </View>
+                              <View style={styles.textContainer}>
+                                    <Text style={styles.textBold}>{title + " Signals"}</Text>
+                                    {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
+                              </View>
+                              <Text style={[styles.statText, { color: color }]}>
+                                    {(user.neutralSignals || user.goodSignals || user.badSignals) &&
+                                          user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
+                              </Text>
+                        </View>
+                  </View>
+            </View>
+      }
       return (
             <View style={styles.container}>
 
                   <Text style={styles.title}>Careere</Text>
+                  <CareereInfoListItem title={"All"} color={'rgb(79, 70, 229)'} iconName={"bar-chart-outline"} />
+                  <CareereInfoListItem title={"Good"} color={"green"} iconName={"checkmark"} />
 
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'rgb(79, 70, 229)' }]}>
-                                          <Ionicons name="trail-sign-outline" color={'rgb(79, 70, 229)'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Total Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'rgb(79, 70, 229)' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'green' }]}>
-                                          <Ionicons name="checkmark" color={'green'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Good Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'green' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'green' }]}>
-                                          <Ionicons name="checkmark" color={'green'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Good Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'green' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'green' }]}>
-                                          <Ionicons name="checkmark" color={'green'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Good Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'green' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'green' }]}>
-                                          <Ionicons name="checkmark" color={'green'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Good Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'green' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
-                  <View style={styles.gridContainer}>
-                        <View style={styles.gridItem}>
-                              <View style={styles.gridItemContent}>
-                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'green' }]}>
-                                          <Ionicons name="checkmark" color={'green'} size={22} />
-                                    </View>
-                                    <View style={styles.textContainer}>
-                                          <Text style={styles.textBold}>Good Signals</Text>
-                                          {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                                    </View>
-                                    <Text style={[styles.statText, { color: 'green' }]}>
-                                          {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                                user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                                    </Text>
-                              </View>
-                        </View>
-                  </View>
+
 
             </View>
       );

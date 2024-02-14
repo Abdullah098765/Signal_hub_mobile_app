@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import ProviderCareer from '../../components/MainComponents/ProviderCareer.js'
 import SubscribeButton from '../../components/Buttons/SubscribeButton.js';
 import WriteAReviewButton from '../../components/Buttons/WriteAReviewButton.js';
-import ActionButtonsForUser from '../UserProfileScreen/ProfileComponents/ActionButtonsForUser.js';
+import ActionButtonsForUser from '../../components/Buttons/ActionButtonsForUser.js';
 
 const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading }) => {
   const [IsThisSignalProvidedByMe, setIsThisSignalProvidedByMe] = useState(false);

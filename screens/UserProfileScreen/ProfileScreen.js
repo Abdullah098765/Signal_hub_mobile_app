@@ -46,7 +46,6 @@ const UserProfileComponent = ({  }) => {
       };
 
 
-
       useEffect(() => {
             if (router?.params?.fIdHash === user?.fIdHash) {
 
@@ -66,7 +65,7 @@ const UserProfileComponent = ({  }) => {
             }
 
 
-      }, []);
+      }, [router,user]);
       useEffect(() => {
 
             if (router?.params?.writeAReview && !isMyProfile) {

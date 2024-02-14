@@ -9,8 +9,6 @@ const useUpload = () => {
       const handleSelectImage = async () => {
             try {
                   const image = await ImageCropPicker.openPicker({
-                        width: 300,
-                        height: 400,
                         cropping: true,
                   });
                   console.log(image);

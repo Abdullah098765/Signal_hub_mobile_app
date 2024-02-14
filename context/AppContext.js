@@ -46,6 +46,7 @@ export const AppProvider = ({ children }) => {
       .then(response => response.text())
       .then(result => {
         setUser(JSON.parse(result))
+        return JSON.parse(result)
       })
       .catch(error => console.log("error", error));
   };

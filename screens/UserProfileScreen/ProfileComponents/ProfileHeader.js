@@ -3,8 +3,8 @@ import { View, StyleSheet, Text, TouchableOpacity, Share } from 'react-native';
 import ProfilePicture from '../../../components/ProfilePicture';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import ActionButtonsForUser from './ActionButtonsForUser';
-import ActionButtonsForProvider from './ActionButtonsForProvider';
+import ActionButtonsForUser from '../../../components/Buttons/ActionButtonsForUser.js';
+import ActionButtonsForProvider from '../../../components/Buttons/ActionButtonsForProvider.js';
 import ShareButton from "../../../components/Buttons/ShareButton.js"
 import { useAuth } from '../../../hooks/useAuth.js';
 import LogoutButton from '../../../components/Buttons/LogoutButton.js';

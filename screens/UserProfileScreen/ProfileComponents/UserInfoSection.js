@@ -21,16 +21,19 @@ const UserInfoSection = ({ personalInformation }) => {
                               <ListItem label="Country:" value={personalInformation.country} />
                               <View style={styles.linksContainer}>
                                     <Text style={styles.linkLabel}>Links:</Text>
-                                    {personalInformation.socialMediaLinks &&
-                                          personalInformation.socialMediaLinks.map((link, index) => (
-                                                <Text
-                                                      key={index}
-                                                      style={styles.link}
-                                                      onPress={() => openLink(link.link)}
-                                                >
-                                                      {link.title}
-                                                </Text>
-                                          ))}
+                                    <View style={{ flexDirection: "row", gap:10 }}>
+
+                                          {personalInformation.socialMediaLinks &&
+                                                personalInformation.socialMediaLinks.map((link, index) => (
+                                                      <Text
+                                                            key={index}
+                                                            style={styles.link}
+                                                            onPress={() => openLink(link.link)}
+                                                      >
+                                                            {link.title}
+                                                      </Text>
+                                                ))}
+                                    </View>
                               </View>
                         </View>
                   </View>

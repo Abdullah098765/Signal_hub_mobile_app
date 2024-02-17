@@ -13,7 +13,9 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isOptionBarsVisible, setOptionBarsVisible] = useState(true);
-  const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
+  const [page, setPage] = useState(1);
+  const [isSignalsLoading, setIsSignalsLoading] = useState(false);
+  const [iseSignalsEnd, setiseSignalsEnd] = useState(false)
 
   const saveUidToStorage = async (uid) => {
     try {
@@ -86,6 +88,21 @@ export const AppProvider = ({ children }) => {
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
     { useNativeDriver: false }
   );
+  const handleScrollForSignals = (event, isSignalsLoading) => {
+    handleScroll(event)
+
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+
+    const isCloseToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 500;
+
+    if (isCloseToBottom && !isSignalsLoading) {
+      if (!iseSignalsEnd) {
+        setIsSignalsLoading(true)
+        setPage((prevPage) => prevPage + 1);
+      }
+
+    }
+  };
 
   const navbarTranslateY = diffClamp.interpolate({
     inputRange: [0, 50],  // You can adjust the threshold value as per your requirement
@@ -114,8 +131,7 @@ export const AppProvider = ({ children }) => {
       setScrollY,
       handleScroll,
       navbarTranslateY,
-      currentProfileRoute, setCurrentProfileRoute,
-      scrollToBottom, scrollViewRef
+      scrollToBottom, scrollViewRef, page, setPage, handleScrollForSignals, isSignalsLoading, setIsSignalsLoading, iseSignalsEnd, setiseSignalsEnd
     }}>
       {children}
     </AppContext.Provider >

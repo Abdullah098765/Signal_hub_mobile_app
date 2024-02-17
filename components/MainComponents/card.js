@@ -8,7 +8,7 @@ import LikeDislikeButton from '../Buttons/LikeDislikeButton';
 
 const SignalCard = ({ signal }) => {
 
-
+      if (!signal) return null
       return (
             <View style={styles.card}>
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>

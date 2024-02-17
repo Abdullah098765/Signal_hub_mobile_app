@@ -12,16 +12,16 @@ import { useRoute } from '@react-navigation/native';
 import SignalPageSkeleton from '../../components/SkeletonPage.js';
 
 
-const UserProfileComponent = ({  }) => {
+const UserProfileComponent = ({ }) => {
 
       const { user } = useAuth()
       const [_user, set_User] = useState();
 
       const router = useRoute()
       const [isMyProfile, setIsMyProfile] = useState(true);
-      const { currentProfileRoute, setCurrentProfileRoute, scrollToBottom, scrollViewRef, handleScroll } = useContext(AppContext);
+      const { scrollToBottom, scrollViewRef, handleScrollForSignals } = useContext(AppContext);
 
-
+  
       const getTargetUser = (pid) => {
             var myHeaders = new Headers();
             var raw = JSON.stringify({
@@ -65,7 +65,7 @@ const UserProfileComponent = ({  }) => {
             }
 
 
-      }, [router,user]);
+      }, [router, user]);
       useEffect(() => {
 
             if (router?.params?.writeAReview && !isMyProfile) {
@@ -78,17 +78,23 @@ const UserProfileComponent = ({  }) => {
             }
 
       }, [scrollViewRef, _user]);
+      const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
+
 
       if (!_user) return <SignalPageSkeleton />
 
       return (
             <View style={{ padding: 5, backgroundColor: "#e5e7eb", }}>
-                  <ScrollView ref={scrollViewRef} style={{ paddingTop:40 }} onScroll={({ nativeEvent }) => { handleScroll({ nativeEvent }) }} scrollEventThrottle={16}>
+                  <ScrollView ref={scrollViewRef} style={{ paddingTop: 40 }} onScroll={({ nativeEvent }) => {
+                        handleScrollForSignals({ nativeEvent });
+                  }} scrollEventThrottle={16}>
                         <ProfileHeader isMyProfile={isMyProfile} user={_user} />
                         <Careere isMyProfile={isMyProfile} user={_user} />
+                        <SectionNavigate />
+
                         <UserInfoSection isMyProfile={isMyProfile} personalInformation={_user.personalInfo} />
-                        <SectionNavigate isMyProfile={isMyProfile} />
-                        <Sections isMyProfile={isMyProfile} targetUser={_user} />
+             
+                        {/* <Sections currentProfileRoute={currentProfileRoute} setCurrentProfileRoute={setCurrentProfileRoute} isMyProfile={isMyProfile} targetUser={_user} /> */}
                   </ScrollView>
             </View>
       );

@@ -30,7 +30,7 @@ function App() {
       <NavigationContainer>
         <AppNavigator>
        
-        <BottomTabNavigator />
+        {/* <BottomTabNavigator /> */}
         </AppNavigator>
       </NavigationContainer>
     </AppProvider>

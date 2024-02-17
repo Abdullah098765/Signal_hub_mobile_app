@@ -117,6 +117,16 @@ const EditProfileForm = () => {
                               placeholder={'Hub (e.g., Sabir Ali)'}
                               onChangeText={(text) => handleChange("fullName", text)}
                               value={formData?.personalInfo?.fullName}
+                        />
+                        <Text style={styles.headings}>Age</Text>
+                        <TextInput
+                              onSubmitEditing={() => { }}
+                              key={'age'}
+                              placeholderTextColor='gray'
+                              style={[styles.fullWidthInput]}
+                              placeholder={'Age (e.g., 21 Years Old)'}
+                              onChangeText={(text) => handleChange("age", text)}
+                              value={formData?.personalInfo?.age}
 
                         />
                         <Text style={styles.headings}>Mobile</Text>
@@ -154,6 +164,14 @@ const EditProfileForm = () => {
                               placeholderTextColor="gray"
                               value={formData?.personalInfo?.languages}
                               onChangeText={(text) => handleChange("languages", text)}
+                        />
+                        <Text style={styles.headings}>Country</Text>
+                        <TextInput
+                              style={styles.fullWidthInput}
+                              placeholder="Enter Your Country"
+                              placeholderTextColor="gray"
+                              value={formData?.personalInfo?.country}
+                              onChangeText={(text) => handleChange("country", text)}
                         />
                         <Text style={[styles.headings]}>About</Text>
                         <TextInput

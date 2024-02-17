@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const About = ({ about }) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -31,6 +32,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
     padding: 8,
+    paddingBottom:70
+
 //     borderRadius: 8,
   },
   title: {

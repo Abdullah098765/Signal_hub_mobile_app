@@ -1,48 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useGetData from '../../../hooks/useGetData';
-const Careere = ({ user }) => {
+function CareereInfoListItem({ title, iconName, color,user_id }) {
+      const { getCounts } = useGetData()
 
-      function CareereInfoListItem({ title, iconName, color }) {
-            const { getCounts } = useGetData()
+      const [count, setCount] = useState(null);
+      useEffect(() => {
+            async function effect() {
+                  const _count = await getCounts(title, user_id)
+                  setCount(_count)
+                
+            }
+            effect()
 
-            const [count, setCount] = useState();
-            useEffect(() => {
-                  async function effect() {
-                        console.log(await getCounts(title, user._id));
-                  }
-                  effect()
+      }, []);
 
-            }, [user]);
-
-            return <View style={styles.gridContainer}>
-                  <View style={styles.gridItem}>
-                        <View style={styles.gridItemContent}>
-                              <View style={[styles.iconContainer, { borderWidth: 1, borderColor: color }]}>
-                                    <Ionicons name={iconName} color={color} size={22} />
-                              </View>
-                              <View style={styles.textContainer}>
-                                    <Text style={styles.textBold}>{title + " Signals"}</Text>
-                                    {/* <Text style={styles.textSecondary}>Lifetime</Text> */}
-                              </View>
-                              <Text style={[styles.statText, { color: color }]}>
-                                    {(user.neutralSignals || user.goodSignals || user.badSignals) &&
-                                          user.neutralSignals.length + user.goodSignals.length + user.badSignals.length}
-                              </Text>
+      return <View style={styles.gridContainer}>
+            <View style={styles.gridItem}>
+                  <View style={styles.gridItemContent}>
+                        <View style={[styles.iconContainer, { borderWidth: 1, borderColor: color }]}>
+                              <Ionicons name={iconName} color={color} size={22} />
                         </View>
+                        <View style={styles.textContainer}>
+                              <Text style={[styles.textBold, { color: color }]}>{title === "All" ? "Total Signals" : title + " Signals"}</Text>
+                              <Text style={styles.textSecondary}>Lifetime</Text>
+                        </View>
+                        <Text style={[styles.statText, { color: color }]}>{count !== null ? count : <ActivityIndicator color={color} />}</Text>
                   </View>
             </View>
-      }
+      </View>
+}
+
+
+const Careere = ({ user }) => {
+
+    
+      const careerInfoItems = [
+            { title: "All", color: '#111827', iconName: "bar-chart-outline" },
+            { title: "Good", color: "darkgreen", iconName: "checkmark" },
+            { title: "Neutral", color: "rgb(37, 99, 235)", iconName: "remove" },
+            { title: "Bad", color: "darkred", iconName: "close" },
+            { title: "Active", color: "green", iconName: "radio-outline" },
+      ];
+
       return (
             <View style={styles.container}>
 
                   <Text style={styles.title}>Careere</Text>
-                  <CareereInfoListItem title={"All"} color={'rgb(79, 70, 229)'} iconName={"bar-chart-outline"} />
-                  <CareereInfoListItem title={"Good"} color={"green"} iconName={"checkmark"} />
-
-
-
+                  {careerInfoItems.map((item, index) => (
+                        <CareereInfoListItem
+                        user_id={user._id}
+                              key={index}
+                              title={item.title}
+                              color={item.color}
+                              iconName={item.iconName}
+                        />
+                  ))}
+                  <View style={styles.gridContainer}>
+                        <View style={styles.gridItem}>
+                              <View style={styles.gridItemContent}>
+                                    <View style={[styles.iconContainer, { borderWidth: 1, borderColor: 'gray' }]}>
+                                          <Ionicons name={"chatbox-ellipses-outline"} color={"gray"} size={22} />
+                                    </View>
+                                    <View style={styles.textContainer}>
+                                          <Text style={styles.textBold}>{"Reviews"}</Text>
+                                          <Text style={styles.textSecondary}>Lifetime</Text>
+                                    </View>
+                                    <Text style={[styles.statText, { color: "gray" }]}>{user?.reviews?.length || 0}</Text>
+                              </View>
+                        </View>
+                  </View>
             </View>
       );
 };

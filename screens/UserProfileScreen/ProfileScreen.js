@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileHeader from './ProfileComponents/ProfileHeader';
@@ -19,7 +19,7 @@ const UserProfileComponent = ({ }) => {
 
       const router = useRoute()
       const [isMyProfile, setIsMyProfile] = useState(true);
-      const { scrollToBottom, scrollViewRef, handleScrollForSignals } = useContext(AppContext);
+      const { scrollToBottom, currentProfileRoute, setCurrentProfileRoute, scrollViewRef, handleScrollForSignals } = useContext(AppContext);
 
 
       const getTargetUser = (pid) => {
@@ -41,12 +41,13 @@ const UserProfileComponent = ({ }) => {
                         set_User(JSON.parse(result))
 
                   })
-                  .catch(error => console.log('error', error));
+                  .catch(error => Alert.alert("Can't get user"));
 
       };
 
 
       useEffect(() => {
+            set_User(null)
             if (router?.params?.fIdHash === user?.fIdHash) {
 
                   console.log('My Profile is True');
@@ -66,6 +67,7 @@ const UserProfileComponent = ({ }) => {
 
 
       }, [router, user]);
+
       useEffect(() => {
 
             if (router?.params?.writeAReview && !isMyProfile) {

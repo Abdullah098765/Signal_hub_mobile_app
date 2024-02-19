@@ -3,13 +3,17 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { AppContext } from '../../context/AppContext';
 import FollowingSignalCard from './FollowingSignalCard';
 import { useAuth } from '../../hooks/useAuth';
+import { useRoute } from '@react-navigation/native';
+import SkeletonCard from '../../components/SkeletonCard';
+import SignalPageSkeleton from '../../components/SkeletonPage';
 
 const FollowingSignals = () => {
       const { handleScroll } = useContext(AppContext);
       const [followedSignals, setFollowedSignals] = useState();
       const { user } = useAuth()
+      const route = useRoute()
       useEffect(() => {
-
+            setFollowedSignals(null)
             var myHeaders = new Headers();
 
 
@@ -28,13 +32,14 @@ const FollowingSignals = () => {
                   .then(result => {
                         setFollowedSignals(JSON.parse(result))
                         //   setDataLoading(false)
-                        // console.log(JSON.parse(result));
                   }
                   )
-                  .catch(error => console.log('error', error));
+                  .catch(error => {});
 
 
-      }, [user]);
+      }, [user,route]);
+
+      if(!followedSignals) return <SignalPageSkeleton/>
       return (
             <ScrollView
                   onScroll={({ nativeEvent }) => {

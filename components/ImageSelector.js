@@ -31,7 +31,7 @@ const ImageSelector = ({ imageUrl, setImageUrl }) => {
 
 const styles = StyleSheet.create({
       imageUploadButton: {
-         
+
             backgroundColor: '#EDEDED',
             color: '#111827'
 

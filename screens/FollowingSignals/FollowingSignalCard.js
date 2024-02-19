@@ -58,7 +58,7 @@ const FollowingSignalCard = ({ signal }) => {
                   )}
                   <TouchableOpacity
                         style={styles.signalProviderContainer}
-                        onPress={() => navigation.navigate('SignalProvider', { fIdHash: signal.signalProvider.fIdHash })}
+                        onPress={() => navigation.navigate('UserProfile', { fIdHash: signal.signalProvider.fIdHash })}
                   >
                         <Image
                               source={{ uri: signal.signalProvider.profilePicture }}

@@ -94,6 +94,7 @@ const CommentSection = ({ signal, user }) => {
 
 const styles = StyleSheet.create({
       container: {
+            borderRadius:6,
             flex: 1,
             backgroundColor: '#fff',
             padding: 16,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
             backgroundColor: '#111827',
             alignItems: "center",
             marginTop: 10,
-            marginBottom: 40,
+            // marginBottom: 40,
       },
       buttonText: {
             color: 'white',

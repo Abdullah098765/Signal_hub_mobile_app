@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useGetData from '../../../hooks/useGetData';
-function CareereInfoListItem({ title, iconName, color,user_id }) {
+function CareereInfoListItem({ title, iconName, color, user_id }) {
       const { getCounts } = useGetData()
 
       const [count, setCount] = useState(null);
       useEffect(() => {
+            setCount(null)
             async function effect() {
                   const _count = await getCounts(title, user_id)
                   setCount(_count)
-                
+
             }
             effect()
 
-      }, []);
+      }, [user_id]);
 
       return <View style={styles.gridContainer}>
             <View style={styles.gridItem}>
@@ -35,7 +36,7 @@ function CareereInfoListItem({ title, iconName, color,user_id }) {
 
 const Careere = ({ user }) => {
 
-    
+
       const careerInfoItems = [
             { title: "All", color: '#111827', iconName: "bar-chart-outline" },
             { title: "Good", color: "darkgreen", iconName: "checkmark" },
@@ -50,7 +51,7 @@ const Careere = ({ user }) => {
                   <Text style={styles.title}>Careere</Text>
                   {careerInfoItems.map((item, index) => (
                         <CareereInfoListItem
-                        user_id={user._id}
+                              user_id={user._id}
                               key={index}
                               title={item.title}
                               color={item.color}

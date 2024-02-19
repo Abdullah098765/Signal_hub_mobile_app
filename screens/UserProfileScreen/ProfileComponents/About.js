@@ -15,10 +15,10 @@ const About = ({ about }) => {
 
 const styles = StyleSheet.create({
   container: {
-      marginTop:0,
-    margin: 5,
+    marginTop: 0,
+    margin: 0,
     flexDirection: 'column',
-//     marginHorizontal: 16,
+    //     marginHorizontal: 16,
   },
   card: {
     flex: 1,
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
     padding: 8,
-    paddingBottom:70
+    paddingBottom: 70
 
-//     borderRadius: 8,
+    //     borderRadius: 8,
   },
   title: {
     fontSize: 18,

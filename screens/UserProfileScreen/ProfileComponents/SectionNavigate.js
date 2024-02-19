@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
 import AllSignals from './ProfileNavigationComponents/All-Signals';
 import Sections from './Sections';
 import { View } from 'react-native';
+import { AppContext } from '../../../context/AppContext';
 
 const Tab = createMaterialTopTabNavigator();
 const tabNames = ["All", "Active", "Stock", "Crypto", "About", "Reviews"];
 
 const SectionNavigate = ({ targetUser, isMyProfile }) => {
-      const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
       const navigation = useNavigation();
       const route = useRoute();
+      const {currentProfileRoute, setCurrentProfileRoute} = useContext(AppContext);
 
 
       return (

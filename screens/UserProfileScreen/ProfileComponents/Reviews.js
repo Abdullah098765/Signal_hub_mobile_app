@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet, Alert } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import ProfilePicture from '../../../components/ProfilePicture';
 import useAction from '../../../hooks/useAction';
 import ImageSelector from '../../../components/ImageSelector';
 import ImageModal from '../../../components/ImageModal';
 import { useAuth } from '../../../hooks/useAuth';
+import { useNavigation } from '@react-navigation/native';
 
 const ReviewCard = ({ review }) => {
+      const navigation = useNavigation()
       const [imageModalVisible, setImageModalVisible] = useState(false);
 
 
       return <View style={styles.reviewCard}>
             <View style={{ justifyContent: "space-between", flexDirection: "row" }}>
-                  <View style={styles.userContainer}>
+                  <TouchableOpacity
+                        onPress={() => navigation.navigate('UserProfile', { fIdHash: review.rFireBaseUid })}
+                        style={styles.userContainer}>
                         {review.rProfilePicture && (
                               <ProfilePicture source={review.rProfilePicture} size={20} />)}
                         <Text style={styles.displayName}>{review.rDisplayName}</Text>
 
 
-                  </View>
+                  </TouchableOpacity>
                   <Text style={styles.timestamp}>
                         {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
                   </Text>
@@ -39,7 +43,7 @@ const ReviewCard = ({ review }) => {
 
 const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
       const { user } = useAuth()
-      const [newReview, setNewReview] = useState();
+      const [newReview, setNewReview] = useState('');
       const { handleReviewSubmit } = useAction()
       const [loading, setLoading] = useState(false);
       const [imageUrl, setImageUrl] = useState();
@@ -57,7 +61,14 @@ const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
 
 
             </View>
-            <TouchableOpacity onPress={() => handleReviewSubmit(setLoading, user, newReview, imageUrl, targetUser._id, setReviews, reviews, setNewReview, setImageUrl)} style={styles.submitButton} disabled={loading}>
+            <TouchableOpacity onPress={() => {
+                  if (imageUrl || newReview.trim() !== '') {
+                        handleReviewSubmit(setLoading, user, newReview, imageUrl, targetUser._id, setReviews, reviews, setNewReview, setImageUrl);
+                  } else {
+                        // Display a message or handle the case where the conditions are not met
+                        Alert.alert('Please provide a valid review or  upload an image.');
+                  }
+            }} style={styles.submitButton}>
 
                   {loading ? (
                         <Text style={styles.buttonText}>Loading...</Text>
@@ -71,6 +82,9 @@ const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
 const Reviews = ({ targetUser, isMyProfile }) => {
 
       const [reviews, setReviews] = useState(targetUser?.reviews);
+      useEffect(() => {
+            setReviews(targetUser?.reviews)
+      }, [targetUser]);
 
       if (!targetUser) return <Text>No Reviews</Text>
 
@@ -168,12 +182,13 @@ const styles = StyleSheet.create({
             padding: 8,
             borderRadius: 8,
             backgroundColor: '#EDEDED',
-            color: '#111827'
+            color: '#111827',
+            
 
       },
       submitButton: {
             padding: 10,
-            borderRadius: 80,
+            borderRadius: 6,
             backgroundColor: '#111827',
             alignItems: "center",
             marginTop: 10,

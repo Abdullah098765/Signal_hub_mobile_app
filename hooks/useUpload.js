@@ -15,13 +15,16 @@ const useUpload = () => {
 
 
                   // Create a reference to the storage service
-                  const storageRef = storage().ref(`comment_images/${image.filename}`);
+                  const timestamp = new Date().getTime();
+                  const uniqueFilename = `${timestamp}_${image.filename}`;
+                  const storageRef = storage().ref(`comment_images/${uniqueFilename}`);
+
 
                   // Upload the image to Firebase Storage
                   await storageRef.putFile(image.path)
 
                   // Get the download URL for the uploaded image
-                  const imageUrl = await storage().ref(`comment_images/${image.filename}`).getDownloadURL();
+                  const imageUrl = await storage().ref(`comment_images/${uniqueFilename}`).getDownloadURL();
                   console.log(imageUrl);
                   return imageUrl
             } catch (error) {

@@ -16,6 +16,7 @@ export const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [isSignalsLoading, setIsSignalsLoading] = useState(true);
   const [iseSignalsEnd, setiseSignalsEnd] = useState(false)
+  const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
 
   const saveUidToStorage = async (uid) => {
     try {
@@ -130,7 +131,7 @@ export const AppProvider = ({ children }) => {
       scrollY,
       setScrollY,
       handleScroll,
-      navbarTranslateY,
+      navbarTranslateY, currentProfileRoute, setCurrentProfileRoute,
       scrollToBottom, scrollViewRef, page, setPage, handleScrollForSignals, isSignalsLoading, setIsSignalsLoading, iseSignalsEnd, setiseSignalsEnd
     }}>
       {children}

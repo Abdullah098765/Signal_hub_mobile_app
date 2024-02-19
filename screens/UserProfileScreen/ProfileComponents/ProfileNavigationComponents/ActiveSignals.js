@@ -5,7 +5,7 @@ import SignalCard from '../../../../components/MainComponents/card';
 import SkeletonCard from '../../../../components/SkeletonCard';
 import { AppContext } from '../../../../context/AppContext';
 
-const AllSignals = ({ currentprofileRoute, targetUser }) => {
+const ActiveSignals = ({ currentprofileRoute, targetUser }) => {
   const [signals, setSignals] = useState([])
   const { page, setPage, isSignalsLoading, setIsSignalsLoading, iseSignalsEnd, setiseSignalsEnd } = useContext(AppContext)
   const { getProfileSignals } = useGetData()
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AllSignals;
+export default ActiveSignals;

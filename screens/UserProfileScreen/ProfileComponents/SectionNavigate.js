@@ -19,24 +19,24 @@ const SectionNavigate = ({ targetUser, isMyProfile }) => {
                   <NavigationContainer independent={true}>
                         <Tab.Navigator
                               initialRouteName={currentProfileRoute}
-                              tabBarOptions={{
-                                    labelStyle: {
+                              screenOptions={{
+                                    tabBarLabelStyle: {
                                           fontSize: 16,
                                           fontWeight: 'bold',
                                           textTransform: 'none',
                                           maxWidth: 100,
                                           overflow: 'hidden',
                                     },
-                                    tabStyle: {
+                                    tabBarItemStyle: {
                                           width: 100,
                                     },
-                                    style: {
+                                    tabBarStyle: {
                                           backgroundColor: '#ffffff',
                                     },
-                                    indicatorStyle: {
+                                    tabBarIndicatorStyle: {
                                           backgroundColor: '#3498db',
                                     },
-                                    scrollEnabled: true,
+                                    tabBarScrollEnabled: true,
                               }}
                         >
                               {tabNames.map((tabName) => (

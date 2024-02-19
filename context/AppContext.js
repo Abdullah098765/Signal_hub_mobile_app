@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOptionBarsVisible, setOptionBarsVisible] = useState(true);
   const [page, setPage] = useState(1);
-  const [isSignalsLoading, setIsSignalsLoading] = useState(false);
+  const [isSignalsLoading, setIsSignalsLoading] = useState(true);
   const [iseSignalsEnd, setiseSignalsEnd] = useState(false)
 
   const saveUidToStorage = async (uid) => {

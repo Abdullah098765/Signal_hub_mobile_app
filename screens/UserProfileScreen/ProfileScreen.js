@@ -21,7 +21,7 @@ const UserProfileComponent = ({ }) => {
       const [isMyProfile, setIsMyProfile] = useState(true);
       const { scrollToBottom, scrollViewRef, handleScrollForSignals } = useContext(AppContext);
 
-  
+
       const getTargetUser = (pid) => {
             var myHeaders = new Headers();
             var raw = JSON.stringify({
@@ -78,7 +78,6 @@ const UserProfileComponent = ({ }) => {
             }
 
       }, [scrollViewRef, _user]);
-      const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
 
 
       if (!_user) return <SignalPageSkeleton />
@@ -90,11 +89,9 @@ const UserProfileComponent = ({ }) => {
                   }} scrollEventThrottle={16}>
                         <ProfileHeader isMyProfile={isMyProfile} user={_user} />
                         <Careere isMyProfile={isMyProfile} user={_user} />
-                        <SectionNavigate />
-
                         <UserInfoSection isMyProfile={isMyProfile} personalInformation={_user.personalInfo} />
-             
-                        {/* <Sections currentProfileRoute={currentProfileRoute} setCurrentProfileRoute={setCurrentProfileRoute} isMyProfile={isMyProfile} targetUser={_user} /> */}
+                        <SectionNavigate isMyProfile={isMyProfile} targetUser={_user} />
+
                   </ScrollView>
             </View>
       );

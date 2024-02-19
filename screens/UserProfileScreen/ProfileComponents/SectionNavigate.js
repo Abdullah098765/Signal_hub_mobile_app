@@ -1,46 +1,69 @@
-// SectionNavigate.js
+import React, { useState, useEffect } from 'react';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer, useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
+import AllSignals from './ProfileNavigationComponents/All-Signals';
+import Sections from './Sections';
+import { View } from 'react-native';
 
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { Text, View } from 'react-native';
-
-const Tab = createBottomTabNavigator();
-
+const Tab = createMaterialTopTabNavigator();
 const tabNames = ["All", "Active", "Stock", "Crypto", "About", "Reviews"];
 
-const SectionNavigate = () => {
-      return (
-            <NavigationContainer independent={true}>
-                  <Tab.Navigator
-                        tabBarOptions={{
-                              activeTintColor: '#111827',
-                              activeBackgroundColor: 'lightgray',
+const SectionNavigate = ({ targetUser, isMyProfile }) => {
+      const [currentProfileRoute, setCurrentProfileRoute] = useState("All");
+      const navigation = useNavigation();
+      const route = useRoute();
 
-                              labelStyle: {
-                                    fontSize: 15,
-                                    flex: 1,
-                                    textAlignVertical: 'center',
-                              },
-                              showLabel: true, // Set to false to hide text labels
-                        }}
-                  >
-                        {tabNames.map((tabName) => (
-                              <Tab.Screen
-                                    key={tabName}
-                                    name={tabName}
-                                    component={() => (
-                                          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                                                <Text>{`${tabName} Signals`}</Text>
-                                          </View>
-                                    )}
-                                    options={{
-                                          tabBarIconStyle: { display: "none" },
-                                    }}
-                              />
-                        ))}
-                  </Tab.Navigator>
-            </NavigationContainer>
+
+      return (
+            <View style={{ marginHorizontal: 5, flex: 1 }}>
+                  <NavigationContainer independent={true}>
+                        <Tab.Navigator
+                              initialRouteName={currentProfileRoute}
+                              tabBarOptions={{
+                                    labelStyle: {
+                                          fontSize: 16,
+                                          fontWeight: 'bold',
+                                          textTransform: 'none',
+                                          maxWidth: 100,
+                                          overflow: 'hidden',
+                                    },
+                                    tabStyle: {
+                                          width: 100,
+                                    },
+                                    style: {
+                                          backgroundColor: '#ffffff',
+                                    },
+                                    indicatorStyle: {
+                                          backgroundColor: '#3498db',
+                                    },
+                                    scrollEnabled: true,
+                              }}
+                        >
+                              {tabNames.map((tabName) => (
+                                    <Tab.Screen
+                                          key={tabName}
+                                          name={tabName}
+                                          component={AllSignals}
+                                          listeners={({ navigation, route }) => ({
+                                                tabPress: (e) => {
+                                                      // Handle custom logic when the tab is pressed
+                                                      console.log(`Tab ${tabName} is pressed`);
+                                                      setCurrentProfileRoute(tabName)
+                                                      // You can also use navigation.navigate to navigate to another screen
+                                                      // navigation.navigate('YourScreen');
+                                                },
+                                          })}
+                                    />
+                              ))}
+                        </Tab.Navigator>
+                  </NavigationContainer>
+                  <Sections
+                        currentProfileRoute={currentProfileRoute}
+                        setCurrentProfileRoute={setCurrentProfileRoute}
+                        isMyProfile={isMyProfile}
+                        targetUser={targetUser}
+                  />
+            </View>
       );
 };
 

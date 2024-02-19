@@ -94,10 +94,10 @@ const styles = StyleSheet.create({
             flex: 1,
             backgroundColor: '#fff',
             padding: 16,
-            margin: 5,
+            margin: 0,
             color: '#111827',
             marginTop: 0,
-            marginBottom:30
+            marginBottom: 30
 
       },
       reviewsContainer: {

@@ -99,15 +99,12 @@ const ProfileSignalCards = ({ currentprofileRoute, user_id }) => {
 
       return (
             <View style={styles.container}>
-                  {signals?.length === 0 && !isSignalsLoading ? (
-                        <Text style={styles.noSignalsText}>No signals available.</Text>
-                  ) : (
-                        <View style={styles.cardContainer}>
-                              {signals[0]?._id && signals?.map((signal, index) => (
-                                    <SignalCard key={index} signal={signal} />
-                              ))}
-                        </View>
-                  )}
+                  {(!signals[0]?._id && iseSignalsEnd) && <Text style={styles.noSignalsText}>No signals available.</Text>}
+
+                  {signals[0]?._id && signals?.map((signal, index) => (
+                        <SignalCard key={index} signal={signal} />
+                  ))}
+
                   {(isSignalsLoading) && <><SkeletonCard /><SkeletonCard /><SkeletonCard /></>}
                   {(isSignalsLoading) && <ActivityIndicator size={40} color={"#111827"} />}
             </View>
@@ -120,7 +117,7 @@ const styles = StyleSheet.create({
             // backgroundColor: 'white',
             // padding: 
             marginTop: 0,
-            margin: 5,
+            margin: 0,
             marginBottom: 45
 
       },

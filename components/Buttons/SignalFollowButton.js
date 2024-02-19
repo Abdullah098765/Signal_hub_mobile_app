@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
             color: '#333', // Text color
             paddingHorizontal: 16,
             paddingVertical: 8,
-            borderRadius: 10,
+            borderRadius: 5,
             fontSize: 14, // Similar to text-sm in Tailwind CSS
             alignItems: "center"
       },

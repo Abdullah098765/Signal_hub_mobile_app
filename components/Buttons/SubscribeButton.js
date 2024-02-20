@@ -17,7 +17,7 @@ const SubscribeButton = ({ targetUser_id, targetUserSubscribers }) => {
             // setSubscribers(targetUser.Subscribers)
 
             if (targetUserSubscribers) {
-                  if (targetUserSubscribers.includes(user._id)) {
+                  if (targetUserSubscribers.includes(user?._id)) {
                         setSubscribed(true);
                         console.log('User is in subscribers array.');
                   } else
@@ -25,7 +25,7 @@ const SubscribeButton = ({ targetUser_id, targetUserSubscribers }) => {
 
             }
 
-      }, [targetUser_id, user._id])
+      }, [targetUser_id, user?._id])
 
       return (
             <View style={styles.container}>

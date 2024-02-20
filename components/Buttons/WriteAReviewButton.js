@@ -10,14 +10,16 @@ const WriteAReviewButton = ({fIdHash}) => {
       const route = useRoute()
       return (
             <TouchableOpacity onPress={() => {
-                  if (!route.params.signalId) {
+                  if (!route?.params?.signalId) {
                         scrollToBottom()
                         setCurrentProfileRoute('Reviews')
-                        console.log(route.params.signalId)
+                        navigation.navigate('UserProfile', { fIdHash: fIdHash, writeAReview: true });
+
                   }
                   else {
                         navigation.navigate('UserProfile', { fIdHash: fIdHash, writeAReview: true });
                   }
+                  
 
             }} style={styles.actionbutton}>
                   <Ionicons name="chatbox-ellipses" color="#fff" />

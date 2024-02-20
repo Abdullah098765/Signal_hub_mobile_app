@@ -73,7 +73,7 @@ const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
                   {loading ? (
                         <Text style={styles.buttonText}>Loading...</Text>
                   ) : (
-                        <View style={{ flexDirection: "row", }}>{user.profilePicture && <ProfilePicture size={20} source={user.profilePicture} />}<Text style={styles.buttonText}> Post</Text></View>
+                        <View style={{ flexDirection: "row", }}>{user?.profilePicture && <ProfilePicture size={20} source={user?.profilePicture} />}<Text style={styles.buttonText}> Post</Text></View>
                   )}
             </TouchableOpacity>
       </>

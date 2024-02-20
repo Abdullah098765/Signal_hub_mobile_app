@@ -1,12 +1,12 @@
 // AppContext.js
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Animated } from 'react-native';
+import { Alert, Animated } from 'react-native';
 
 // Create a new context instance
 export const AppContext = createContext();
 
-// Create a provider component
+// Create a provider componentgit
 export const AppProvider = ({ children }) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,7 +51,7 @@ export const AppProvider = ({ children }) => {
         setUser(JSON.parse(result))
         return JSON.parse(result)
       })
-      .catch(error => console.log("error", error));
+      .catch(error => Alert.alert("Check your connection"));
   };
   useEffect(() => {
     const checkLoginStatus = async () => {

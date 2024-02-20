@@ -11,7 +11,7 @@ const SignalProviderInfoOnSignalPage = ({ signal, user, router, setRouterLoading
   const [IsThisSignalProvidedByMe, setIsThisSignalProvidedByMe] = useState(false);
   useEffect(() => {
 
-    if (signal.signalProvider._id === user._id) {
+    if (signal.signalProvider?._id === user?._id) {
       setIsThisSignalProvidedByMe(true)
     }
 

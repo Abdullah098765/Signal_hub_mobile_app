@@ -4,6 +4,7 @@ import SubscribeButton from './SubscribeButton';
 import WriteAReviewButton from './WriteAReviewButton';
 
 const ActionButtonsForUser = ({ targetUser }) => {
+      if (!targetUser) return null
       return (
             <View style={styles.actionbuttons}>
                   <View style={styles.actionbutton} >

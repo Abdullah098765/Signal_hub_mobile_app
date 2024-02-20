@@ -16,7 +16,7 @@ const SubscribedCard = ({ user }) => {
             const options = { year: "numeric", month: "long" };
             return new Intl.DateTimeFormat("en-US", options).format(date);
       }
-      if (!user) return null
+      if (!user?._id) return null
 
       return (
             <View style={styles.container}>
@@ -47,7 +47,7 @@ const SubscribedCard = ({ user }) => {
                   </View>
                   <ProviderCareer signalProvider={user} />
 
-                  <ActionButtonsForUser />
+                  <ActionButtonsForUser targetUser={user} />
                   {/* <ActionButtonsForProvider /> */}
             </View>
       );

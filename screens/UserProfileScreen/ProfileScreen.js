@@ -14,7 +14,7 @@ import SignalPageSkeleton from '../../components/SkeletonPage.js';
 
 const UserProfileComponent = ({ }) => {
 
-      const { user } = useAuth()
+      const { user, getUser } = useAuth()
       const [_user, set_User] = useState();
 
       const router = useRoute()
@@ -47,25 +47,28 @@ const UserProfileComponent = ({ }) => {
 
 
       useEffect(() => {
-            set_User(null)
-            if (router?.params?.fIdHash === user?.fIdHash) {
 
-                  console.log('My Profile is True');
-                  setIsMyProfile(true)
-                  set_User(user)
-            }
-            else if (!router.params) {
-                  console.log('My Page');
-                  setIsMyProfile(true)
-                  set_User(user)
-            }
-            else {
-                  console.log('My Profile is false');
-                  setIsMyProfile(false)
-                  getTargetUser(router.params.fIdHash)
-            }
+            async function runUseEffect(params) {
+                  set_User(null)
+                  if (router?.params?.fIdHash === user?.fIdHash) {
+                        console.log('My Profile is True');
+                        await getUser()
+                        setIsMyProfile(true)
+                        set_User(user)
+                  }
+                  else if (!router.params) {
+                        console.log('My Page');
+                        setIsMyProfile(true)
+                        set_User(user)
+                  }
+                  else {
+                        console.log('My Profile is false');
+                        setIsMyProfile(false)
+                        getTargetUser(router.params.fIdHash)
+                  }
 
-
+            }
+            runUseEffect()
       }, [router, user]);
 
       useEffect(() => {
@@ -82,7 +85,8 @@ const UserProfileComponent = ({ }) => {
       }, [scrollViewRef, _user]);
 
 
-      if (!_user) return <SignalPageSkeleton />
+      if (!_user?._id) return <SignalPageSkeleton />
+      // if (!user) return <SignalPageSkeleton />
 
       return (
             <View style={{ padding: 5, backgroundColor: "#e5e7eb", }}>

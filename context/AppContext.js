@@ -22,7 +22,7 @@ export const AppProvider = ({ children }) => {
     try {
       await AsyncStorage.setItem('uid', uid);
     } catch (error) {
-      console.error('Error saving UID to AsyncStorage:', error);
+      // console.error('Error saving UID to AsyncStorage:', error);
     }
   };
 
@@ -30,12 +30,13 @@ export const AppProvider = ({ children }) => {
     try {
       await AsyncStorage.removeItem('uid');
     } catch (error) {
-      console.error('Error removing UID from AsyncStorage:', error);
+      // console.error('Error removing UID from AsyncStorage:', error);
     }
   };
   const getUser = async () => {
     var raw = JSON.stringify({
-      uid: await AsyncStorage.getItem('uid')
+      uid: "P9AG6hoiTNc2MM0GySSJZ9YG5h33"
+      // uid: await AsyncStorage.getItem('uid'),
     });
 
     var requestOptions = {
@@ -57,7 +58,8 @@ export const AppProvider = ({ children }) => {
     const checkLoginStatus = async () => {
       try {
         // Get the 'uid' from AsyncStorage
-        const uid = await AsyncStorage.getItem('uid');
+        // const uid = await AsyncStorage.getItem('uid');
+        const uid = "P9AG6hoiTNc2MM0GySSJZ9YG5h33";
 
         // If 'uid' exists, set isLoggedIn to true
         if (uid) {
@@ -67,7 +69,7 @@ export const AppProvider = ({ children }) => {
 
       } catch (error) {
         // Handle errors here
-        console.error('Error reading uid from AsyncStorage:', error);
+        // console.error('Error reading uid from AsyncStorage:', error);
       }
     };
 

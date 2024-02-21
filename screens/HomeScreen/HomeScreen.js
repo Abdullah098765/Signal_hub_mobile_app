@@ -31,13 +31,13 @@ const HomeScreen = () => {
           );
 
           let updatedSignals = prevSignals.concat(uniqueNewSignals);
-          console.log("All Signals:", updatedSignals);
+          // console.log("All Signals:", updatedSignals);
           return updatedSignals; // This value will be the new state
         });
         setIsSignalsLoading(false);
       })
       .catch(error => {
-        console.log("Error fetching signals:", error);
+        // console.log("Error fetching signals:", error);
         setIsSignalsLoading(false);
       });
   };

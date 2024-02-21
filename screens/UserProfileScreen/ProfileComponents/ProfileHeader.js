@@ -16,6 +16,7 @@ const ProfileHeader = ({ user, isMyProfile }) => {
             const options = { year: "numeric", month: "long" };
             return new Intl.DateTimeFormat("en-US", options).format(date);
       }
+      if (!user?._id) return null
 
       return (
             <View style={styles.container}>
@@ -23,7 +24,7 @@ const ProfileHeader = ({ user, isMyProfile }) => {
                         {isMyProfile && <LogoutButton />}
                   </View>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 5, position: "absolute", top: 10, right: 10 }}>
-                        <ShareButton type={'Signal Provider'} url={"https://signal-hub.vercel.app/signal-provider/" + user.fIdHash}/>
+                        <ShareButton type={'Signal Provider'} url={"https://signal-hub.vercel.app/signal-provider/" + user.fIdHash} />
                   </View>
                   <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginVertical: 0, }}>
                         <ProfilePicture

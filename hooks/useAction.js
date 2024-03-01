@@ -269,9 +269,7 @@ const useAction = () => {
             }
       }
       const handleCommentSubmit = async (setLoading, user, newComment, imageUrl, signalId, setComments, comments, setNewComment, setImageUrl) => {
-            if (newComment.trim() === '') {
-                  return null;
-            }
+         
 
             setLoading(true)
             // Implement your comment submission logic here

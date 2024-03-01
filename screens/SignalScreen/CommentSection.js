@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet, ToastAndroid } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import ProfilePicture from '../../components/ProfilePicture';
 import useAction from '../../hooks/useAction';
@@ -39,6 +39,8 @@ const CommentsInput = ({ user, newComment, setNewComment, signalId, setComments,
 
       const [loading, setLoading] = useState(false);
       const [imageUrl, setImageUrl] = useState();
+      const [imageLoading, setImageLoading] = useState(false);
+
       return <>
             <View style={styles.commentInputContainer}>
                   <TextInput
@@ -49,10 +51,24 @@ const CommentsInput = ({ user, newComment, setNewComment, signalId, setComments,
                         multiline
                         placeholderTextColor={"#111827"}
                   />
-                  <ImageSelector imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                  <ImageSelector imageLoading={imageLoading} setImageLoading={setImageLoading} imageUrl={imageUrl} setImageUrl={setImageUrl} />
 
             </View>
-            <TouchableOpacity onPress={() => handleCommentSubmit(setLoading, user, newComment, imageUrl, signalId, setComments, comments, setNewComment, setImageUrl)} style={styles.submitButton} disabled={loading}>
+            <TouchableOpacity onPress={() => {
+                  if (!imageLoading) {
+
+                        if (imageUrl || newComment.trim() !== '') {
+                              handleCommentSubmit(setLoading, user, newComment, imageUrl, signalId, setComments, comments, setNewComment, setImageUrl)
+
+                        } else {
+                              // Display a message or handle the case where the conditions are not met
+                              ToastAndroid.show('Please provide a valid comment or upload an image.', 2000);
+
+                        }
+                  } else {
+                        ToastAndroid.show('Image is still loading. Please wait.', 2000);
+                  }
+            }} style={styles.submitButton} disabled={loading}>
                   {loading ? (
                         <Text style={styles.buttonText}>Posting...</Text>
                   ) : (
@@ -94,7 +110,7 @@ const CommentSection = ({ signal, user }) => {
 
 const styles = StyleSheet.create({
       container: {
-            borderRadius:6,
+            borderRadius: 6,
             flex: 1,
             backgroundColor: '#fff',
             padding: 16,

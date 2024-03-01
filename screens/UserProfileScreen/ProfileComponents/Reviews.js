@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, ScrollView, StyleSheet, Alert, ToastAndroid } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 import ProfilePicture from '../../../components/ProfilePicture';
 import useAction from '../../../hooks/useAction';
@@ -46,6 +46,7 @@ const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
       const [newReview, setNewReview] = useState('');
       const { handleReviewSubmit } = useAction()
       const [loading, setLoading] = useState(false);
+      const [imageLoading, setImageLoading] = useState(false);
       const [imageUrl, setImageUrl] = useState();
       return <>
             <View style={styles.reviewInputContainer}>
@@ -57,21 +58,30 @@ const ReviewsInput = ({ targetUser, reviews, setReviews }) => {
                         multiline
                         placeholderTextColor={"#111827"}
                   />
-                  <ImageSelector imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                  <ImageSelector imageLoading={imageLoading} setImageLoading={setImageLoading} imageUrl={imageUrl} setImageUrl={setImageUrl} />
 
 
             </View>
             <TouchableOpacity onPress={() => {
-                  if (imageUrl || newReview.trim() !== '') {
-                        handleReviewSubmit(setLoading, user, newReview, imageUrl, targetUser._id, setReviews, reviews, setNewReview, setImageUrl);
+                  if (!imageLoading) {
+
+                        if (imageUrl || newReview.trim() !== '') {
+                              handleReviewSubmit(setLoading, user, newReview, imageUrl, targetUser._id, setReviews, reviews, setNewReview, setImageUrl);
+
+                        } else {
+                              // Display a message or handle the case where the conditions are not met
+                              ToastAndroid.show('Please provide a valid review or upload an image.', 2000);
+
+                        }
                   } else {
-                        // Display a message or handle the case where the conditions are not met
-                        Alert.alert('Please provide a valid review or  upload an image.');
+
+                        ToastAndroid.show('Image is still loading. Please wait.', 2000);
+
                   }
             }} style={styles.submitButton}>
 
                   {loading ? (
-                        <Text style={styles.buttonText}>Loading...</Text>
+                        <Text style={styles.buttonText}>Posting Review...</Text>
                   ) : (
                         <View style={{ flexDirection: "row", }}>{user?.profilePicture && <ProfilePicture size={20} source={user?.profilePicture} />}<Text style={styles.buttonText}> Post</Text></View>
                   )}
@@ -183,7 +193,7 @@ const styles = StyleSheet.create({
             borderRadius: 8,
             backgroundColor: '#EDEDED',
             color: '#111827',
-            
+
 
       },
       submitButton: {

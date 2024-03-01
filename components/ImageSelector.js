@@ -3,8 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Text, ActivityIndicator } from 'rea
 import useUpload from '../hooks/useUpload';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ImageSelector = ({ imageUrl, setImageUrl }) => {
-      const [imageLoading, setImageLoading] = useState(false);
+const ImageSelector = ({ imageUrl, setImageUrl,imageLoading, setImageLoading, }) => {
       const { handleSelectImage } = useUpload()
       return (
             <>
